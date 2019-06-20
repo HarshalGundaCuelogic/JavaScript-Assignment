@@ -1,0 +1,78 @@
+<!-- <html>
+    <head>
+        <script>
+        function verify(){
+            var no;
+            
+            no = Number(document.getElementById("age").value);
+            console.log(typeof(no))
+            console.log(no)
+            /* if(typeof(no) != Number)
+            {
+                alert("Invalid Input");
+            }
+            else  */if(no < 18)
+            {
+                alert("Under 18");
+            }
+            else
+            {
+                alert("You are Adult");
+            }
+        }
+        </script>
+    </head>
+    <body>
+        Enter your age:<input type="tel" id="age"><br />
+        <button onclick="verify()">Click me</button>
+    </body>
+</html> -->
+
+<!-- <!doctype html>
+<html>
+    <head>
+        <script>
+            function add(){
+            var a,b,c;
+            a=Number(document.getElementById("first").value);
+            b=Number(document.getElementById("second").value);
+            /* c= a + b;
+            document.getElementById("answer").value = c; */
+
+            document.getElementById("answer").value = a*b;
+            }
+        </script>
+    </head>
+
+    <body>
+        <input id="first"><br>
+        <input id="second"><br>
+        <button onclick="add()">Multiply</button>
+        <input id="answer">
+    </body>
+</html> -->
+
+<!doctype html>
+<html>
+    <head>
+        <script>
+        function factorial(){
+
+        var i, no, fact;
+        fact=1;
+        no=Number(document.getElementById("num").value);
+        for(i=1; i<=no; i++)  
+        {
+        fact= fact*i;
+        }  
+        document.getElementById("answer").value= fact;
+        }
+        </script>
+    </head>
+
+    <body>
+        Enter Num: <input id="num">
+        <button onclick="factorial()">Factorial</button>
+        <input id="answer">
+    </body>
+</html>
