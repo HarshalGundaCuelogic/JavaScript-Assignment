@@ -3,6 +3,7 @@
 <html>
 
     <head>
+        <title>Sign up</title>
         <link rel="stylesheet" href="./css/normalise.css" type="text/css">
         <link rel="stylesheet" href="./css/reset.css" type="text/css">
         <link rel="stylesheet" href="./css/signup.css" type="text/css">
@@ -10,7 +11,40 @@
     </head>
 
     <body>
-        dsfsdfsdf
+        <header>
+            <div class="container">
+                <a href="./home.html"><img src="./images/todoist_logo.png" alt="Todoist Logo" width="160" height="66"></a>
+                <nav>
+                    <ul>
+                        <li><a href="./signup.html">Sign up</a></li>
+                        <li><a href="./login.html">Login</a></li>
+                        <div class="clearfix"></div>
+                    </ul>
+                    <div class="clearfix"></div>
+                </nav>
+            </div>
+        </header>
+
+        <form>
+            <div class="container">
+                <h1>Create an account</h1>
+                <h4>It's free and always will be.</h4>
+                <input id="fname" type="text" placeholder="First Name">
+                <input id="lname" type="text" placeholder="Last Name"><br>
+                <input id="address" type="text" placeholder="Address"><br>
+                <input id="email" type="email" placeholder="Email ID"><br>
+                <input id="password" type="password" placeholder="Password" title="Password must be 8-15 characters which contains at least a capital letter, a small letter, a number and a special symbol"><br>
+                <div class="radio">
+                    <input type="radio" name="gender" value="male" checked>Male
+                    <input type="radio" name="gender" value="female">Female
+                    <input type="radio" name="gender" value="other">Other
+                </div>
+                <!-- <br> -->
+                <button type="reset">Reset Form</button>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+        <marquee direction="right" truespeed="1000">todoist sign up</marquee>
     </body>
 
 </html>
