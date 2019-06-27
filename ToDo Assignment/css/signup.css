@@ -75,7 +75,7 @@ input{
     vertical-align: middle;
 }
 
-#fname, #lname, #email, #address, #password{
+#fname, #lname, #email, #address, #password, #confirm_password{
     margin: 10px 0px;
 }
 
@@ -83,7 +83,7 @@ input{
     margin-right: 18px;
 }
 
-#email, #address, #password{
+#email, #address, #password, #confirm_password{
     width: 42.5%;
 }
 

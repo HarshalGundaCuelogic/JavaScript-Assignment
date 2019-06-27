@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Sign up</title>
+        <title>Profile Page</title>
         <link rel="stylesheet" href="../css/normalise.css" type="text/css">
         <link rel="stylesheet" href="../css/reset.css" type="text/css">
         <link rel="stylesheet" href="../css/signup.css" type="text/css">
@@ -22,5 +22,27 @@
                 </nav>
             </div>
         </header>
+
+        <form name="profilepage">
+            <div class="container">
+                <h1>Hello, there...</h1>
+                <!-- <figure>
+                    <img src="../images/profile_picture.png" alt="Profile Photo" width="150" height="150"><br>
+                    <input type="file" accept="image/*">
+                </figure> -->
+                <input id="fname" type="text" placeholder="First Name" disabled>
+                <input id="lname" type="text" placeholder="Last Name" disabled><br>
+                <input id="address" type="text" placeholder="Address" disabled><br>
+                <input id="email" type="email" placeholder="Email ID" disabled><br>
+                <input id="password" type="password" placeholder="Password" disabled><br>
+                <div class="radio">
+                    <input type="radio" name="gender" value="male" disabled>Male
+                    <input type="radio" name="gender" value="female" disabled>Female
+                    <input type="radio" name="gender" value="other" disabled>Other
+                </div>
+                <button onclick="">Edit</button>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
     </body>
 </html>
