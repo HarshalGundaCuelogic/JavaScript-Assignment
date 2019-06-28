@@ -2,9 +2,12 @@
 <html>
     <head>
         <title>Profile Page</title>
+        <meta charset="UTF-8">
         <link rel="stylesheet" href="../css/normalise.css" type="text/css">
         <link rel="stylesheet" href="../css/reset.css" type="text/css">
         <link rel="stylesheet" href="../css/signup.css" type="text/css">
+        <script src="../js/profile.js" type="text/javascript"></script>
+        <script src="../js/signup.js" type="text/javascript"></script>
         <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700&display=swap" rel="stylesheet"> 
     </head>
 
@@ -26,22 +29,24 @@
         <form name="profilepage">
             <div class="container">
                 <h1>Hello, there...</h1>
-                <!-- <figure>
+                <figure>
                     <img src="../images/profile_picture.png" alt="Profile Photo" width="150" height="150"><br>
                     <input type="file" accept="image/*">
-                </figure> -->
-                <input id="fname" type="text" placeholder="First Name" disabled>
-                <input id="lname" type="text" placeholder="Last Name" disabled><br>
-                <input id="address" type="text" placeholder="Address" disabled><br>
+                </figure>
+                <input class="edit" id="fname" type="text" placeholder="First Name" disabled>
+                <input class="edit" id="lname" type="text" placeholder="Last Name" disabled><br>
+                <input class="edit" id="address" type="text" placeholder="Address" disabled><br>
                 <input id="email" type="email" placeholder="Email ID" disabled><br>
-                <input id="password" type="password" placeholder="Password" disabled><br>
+                <input class="edit" id="password" type="password" placeholder="Password" disabled><br>
+
                 <div class="radio">
                     <input type="radio" name="gender" value="male" disabled>Male
                     <input type="radio" name="gender" value="female" disabled>Female
                     <input type="radio" name="gender" value="other" disabled>Other
                 </div>
-                <button onclick="">Edit</button>
-                <button type="submit">Submit</button>
+
+                <button type="button" onclick="enable_fields();">Edit</button>
+                <button type="submit" onclick="validations();">Submit</button>
             </div>
         </form>
     </body>

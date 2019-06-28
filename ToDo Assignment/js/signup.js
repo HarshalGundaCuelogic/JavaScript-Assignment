@@ -1,9 +1,10 @@
-function validations(){
+function validations()
+{
     // fetching the fields from the form 
     let first_name = document.getElementById("fname").value;
     let last_name = document.getElementById("lname").value;
     let address = document.getElementById("address").value;
-    /* let emailid = document.signup.getElementById("email").value; */
+    let emailid = document.getElementById("email").value;
     let passwd = document.getElementById("password").value;
     let conf_passwd = document.getElementById("confirm_password").value;
     
@@ -20,39 +21,72 @@ function validations(){
        (passwd.match(regex_passwd)) &&
        (conf_passwd.match(passwd)))
     {   
-        alert("hi");
-        StoreItems(first_name,last_name,address,passwd);
-        /* Window.open("../html/profile_page.html"); */
-        var myWindow = window.open("../html/profile_page.html", "_self");
-        myWindow.document.write("../html/profile_page.html");
+        alert("all elements are valid");
+        let bRet = StoreItems(first_name,last_name,address,emailid,passwd)
+
+        if(bRet == true)
+        {
+            // alert("Your form has been submitted successfully");
+            window.location = '../html/profile_page.html';
+            // window.open('../html/profile_page.html'/* ,'_self' */);
+        }
+        else
+        {
+            
+        }
     }
     else
     {
-        alert("bye");
-        //window.location.href = "../html/signup.html";
-        Window.open("../html/signup.html");
+        
     }
 }
 
-function StoreItems(first_name,last_name,address,passwd)
-{    
+function StoreItems(first_name,last_name,address,emailid,passwd)
+{   
     let user_info = {
         'first_name_user' : first_name,
         'last_name_user' : last_name,
         'address_user' : address,
-        /* 'email_user' : emailid, */
+        'email_user' : emailid,
         'password_user' : passwd
     }
+    /* console.log(user_info.email_user); */
 
-    /* console.log(user_info.first_name_user); */
     let code_array = JSON.parse(localStorage.getItem('local_storage_array'));
 
     if(code_array == null)
     {
+        alert("array not exists, so made new array in local storage");
         code_array = [];
-    }
-    
-    code_array.push(user_info);
 
-    localStorage.setItem("local_storage_array",JSON.stringify(code_array));
+        code_array.push(user_info);
+        localStorage.setItem("local_storage_array",JSON.stringify(code_array));
+        return true;
+    }
+    else
+    {
+        alert("array is exists already");
+
+        let i=0;
+        for(i=0; i<code_array.length;i++)
+        {
+            if((code_array[i].email_user) == emailid)
+            {
+                break;
+            }
+        }
+
+        if(i == code_array.length)
+        {   
+            alert("email id is new");
+            code_array.push(user_info);
+            localStorage.setItem("local_storage_array",JSON.stringify(code_array));
+            return true;
+        }
+        else
+        {
+            alert("Email ID already exists");
+            return false;
+        }
+    }
 }

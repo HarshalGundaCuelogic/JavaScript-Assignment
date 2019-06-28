@@ -3,9 +3,11 @@
 <html>
     <head>
         <title>Login</title>
+        <meta charset="UTF-8">
         <link rel="stylesheet" href="../css/normalise.css" type="text/css">
         <link rel="stylesheet" href="../css/reset.css" type="text/css">
         <link rel="stylesheet" href="../css/login.css" type="text/css">
+        <script src="../js/login.js" type="text/javascript"></script>
         <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700&display=swap" rel="stylesheet"> 
     </head>
 
@@ -26,9 +28,9 @@
 
         <form name="login">
             <div class="container">
-                <input type="email" name="email" id="" placeholder="Email ID"><br>
-                <input type="password" name="password" id="" placeholder="Password"><br>
-                <button type="submit">Login</button>
+                <input type="email" id="email" placeholder="Email ID"><br>
+                <input type="password" id="password" placeholder="Password"><br>
+                <button type="button" onclick="check_validity();">Login</button>
                 <button type="submit">Forgot Password?</button>
             </div>
         </form>
