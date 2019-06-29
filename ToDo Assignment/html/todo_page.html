@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en">
 
@@ -7,17 +7,83 @@
         <title>To Do</title>
         <link rel="stylesheet" href="../css/normalise.css" type="text/css">
         <link rel="stylesheet" href="../css/reset.css" type="text/css">
-        <link rel="stylesheet" href="../css/signup.css" type="text/css">
+        <link rel="stylesheet" href="../css/todo.css" type="text/css">
         <script src="../js/todo.js" type="text/javascript"></script>
         <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700&display=swap" rel="stylesheet">
     </head>
 
     <body>
-        <h1 id="hello_user"></h1>
+        <header>
+          <div class="container">
+            <a href="./todo_page.html"><img src="../images/todoist_logo.png" alt="Todoist Logo" width="160" height="66"></a>
+            <h1>My To Do List</h1>
+            <nav>
+              <ul>
+                <li><a href="./profile_page.html">My Profile</a></li>
+                <li><a href="./login.html" onclick="logout_user();">Logout</a></li>
+                <div class="clearfix"></div>
+              </ul>
+              <div class="clearfix"></div>
+            </nav>
+          </div>
+        </header>
+
+        <section class="section1">
+            <div class="container">
+
+              <div class="left">
+                  <table id="todo_table">
+                      <th>
+                          <tr>
+                              <td>No.</td>
+                              <td>To Do Name</td>
+                              <td>Start Date</td>
+                              <td>Due Date</td>
+                              <td>Categories</td>                          
+                              <td>is Public</td>
+                              <td></td>
+                          </tr>
+                      </th>
+                  </table>
+              </div>
+                
+              <div class="right">
+                <form name="add_todo">
+                  <input type="text" placeholder="Title..." id="myInput" required><br>
+
+                  <label>Start Date :</label>
+                  <input type="date" id="sdate" required><br>
+
+                  <label>Due Date :</label>
+                  <input type="date" id="ddate" required><br>
+
+                  <div class="public">
+                    <label>is Public :</label>
+                    <input type="checkbox" id="ispublictrue" value="yes">
+                  </div>
+
+                  <label>Categories :</label>
+                  <input type="radio" name="categories" value="Home" checked>Home
+                  <input type="radio" name="categories" value="Personal">Personal
+                  <input type="radio" name="categories" value="Office">Office
+
+                  <textarea id="description" cols="69" rows="10" placeholder="Your description here..."></textarea><br>
+
+                  <button type="reset" onclick="add_todo_item();">Add</button>
+                  <button type="button" onclick="edit_todo_item();">Edit</button>
+                  <button type="button" onclick="delete_todo_item();">Delete</button>
+                  <button type="reset">Reset</button>
+                </form>
+              </div>
+              <div class="clearfix"></div>
+              
+            </div>
+        </section>
     </body>
 
-</html> -->
+</html>
 
+<!-- 
 <!DOCTYPE html>
 <html>
 <head>
@@ -222,3 +288,4 @@ function newElement() {
 
 </body>
 </html>
+ -->

@@ -11,20 +11,20 @@ function check_validity()
     {   
         let bRet = FetchItems(emailid,passwd)
 
-        alert(bRet);
-
         if(bRet == true)
         {
-            window.open('../html/todo_page.html'/* ,'_self' */);
+            alert("Successfully logged in");
+            window.location = '../html/todo_page.html';
         }
         else
         {
-            
+            window.location.reload;
         }
     }   
     else    //email validations are false
     {
         alert("Invalid Email");
+        window.location.reload;
     }
 }
 
@@ -43,20 +43,20 @@ function FetchItems(emailid,passwd)
     }
     else
     {
-        let i = 0;
         let flag = true;
+        let index = 0;
 
-        for(i=0; i<code_array.length;i++)   //checking for valid email and password for that email
+        for(index=0; index<code_array.length;index++)   //checking for valid email and password for that email
         {
             //email and password both matches
-            if(((code_array[i].email_user) == emailid) && ((code_array[i].password_user) == passwd))
+            if(((code_array[index].email_user) == emailid) && ((code_array[index].password_user) == passwd))
             {
-                sessionStorage.setItem("logged_in_user",emailid);
+                sessionStorage.setItem("logged_in_user",index);
                 flag = true;
                 break;//create session here and break
             }
             //email found but matching password is not found
-            else if(((code_array[i].email_user) == emailid) && ((code_array[i].password_user) != passwd)) 
+            else if(((code_array[index].email_user) == emailid) && ((code_array[index].password_user) != passwd)) 
             {
                 alert("Wrong Password");
                 flag = false;
@@ -68,7 +68,7 @@ function FetchItems(emailid,passwd)
             }
         }
 
-        if((i == code_array.length) && (flag == false)) //no records found
+        if((index == code_array.length) && (flag == false)) //no records found
         {   
             alert("No records found!!!");
             return false;

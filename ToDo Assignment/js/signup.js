@@ -7,11 +7,12 @@ function validations()
     let emailid = document.getElementById("email").value;
     let passwd = document.getElementById("password").value;
     let conf_passwd = document.getElementById("confirm_password").value;
-    
+    let gender_type = document.querySelector('input[name="gender"]:checked').value;
+
     // Here, regular expression for every field is written 
     let regex_first_name = /^([a-zA-Z]{3,})$/;
     let regex_last_name = /^[a-zA-Z]{3,}$/;
-    /* let regex_emailid = /^[a-zA-Z]{3,}$/; */ // /^([A-Za-z0-9_\-\.])+\@([a-z]){4,}\.([a-z]{2,4})$/; 
+    let regex_emailid = /^[a-zA-Z]{3,}$/; // /^([A-Za-z0-9_\-\.])+\@([a-z]){4,}\.([a-z]{2,4})$/; 
     let regex_passwd = /^[a-zA-Z]{3,}$/;
 
     // condition to check whether each field is valid or not
@@ -22,33 +23,35 @@ function validations()
        (conf_passwd.match(passwd)))
     {   
         alert("all elements are valid");
-        let bRet = StoreItems(first_name,last_name,address,emailid,passwd)
+        let bRet = StoreItems(first_name,last_name,address,emailid,passwd,gender_type)
 
         if(bRet == true)
         {
-            // alert("Your form has been submitted successfully");
-            window.location = '../html/profile_page.html';
-            // window.open('../html/profile_page.html'/* ,'_self' */);
+            alert("Your form has been submitted successfully");
+            window.location = '../html/login.html';
         }
         else
         {
-            
+            window.location.reload();
         }
     }
     else
     {
-        
+        window.location.reload();
     }
 }
 
-function StoreItems(first_name,last_name,address,emailid,passwd)
+function StoreItems(first_name,last_name,address,emailid,passwd,gender_type)
 {   
+    let to_do_list = new Array();
     let user_info = {
         'first_name_user' : first_name,
         'last_name_user' : last_name,
         'address_user' : address,
         'email_user' : emailid,
-        'password_user' : passwd
+        'password_user' : passwd,
+        'gender_user': gender_type,
+        'to_do_user' : to_do_list
     }
     /* console.log(user_info.email_user); */
 
