@@ -12,7 +12,7 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700&display=swap" rel="stylesheet">
     </head>
 
-    <body>
+    <body onload="show_users_todo_on_page_load();">
         <header>
           <div class="container">
             <a href="./todo_page.html"><img src="../images/todoist_logo.png" alt="Todoist Logo" width="160" height="66"></a>
@@ -35,13 +35,13 @@
                   <table id="todo_table">
                       <th>
                           <tr>
-                              <td>No.</td>
+                              <td></td>
                               <td>To Do Name</td>
                               <td>Start Date</td>
                               <td>Due Date</td>
-                              <td>Categories</td>                          
                               <td>is Public</td>
-                              <td></td>
+                              <td>Categories</td>
+                              <td>Description</td>
                           </tr>
                       </th>
                   </table>
