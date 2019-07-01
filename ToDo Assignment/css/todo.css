@@ -59,9 +59,9 @@ header h1{
 }
 
 /* ------------------------- section 1 ---------------------------- */
-.section1{
+/* .section1{
     text-align: center;
-}
+} */
 
 .section1 input[type="text"]{
     height: 40px;
@@ -86,24 +86,25 @@ header h1{
 }
 
 .section1 .left{
-    width: 50%;
+    width: 60%;
     display: inline-block;
     line-height: 25px;
 }
 
 .section1 .right{
     text-align: center;
-    width: 50%;
+    width: 40%;
     float: right;
-    border-left: 2px solid black;
 }
 
 .right{
+    text-align: center;
     padding: 10px 20px 10px 20px;
+    border-left: 2px solid black;
 }
 
 .right input[type="text"]{
-    width: 90%;
+    width: 100%;
     height: 40px;
     margin-bottom: 20px;
 }
@@ -126,6 +127,7 @@ header h1{
 
 .right textarea{
     margin-top: 20px;
+    width: 100%;
 }
 
 .public{
@@ -137,10 +139,18 @@ header h1{
 }
 
 .left table{
+    width: 100%;
+    text-align: center;
     border: 1px solid black;
     border-collapse: collapse;
 }
 
-.left table{
+.left table th,.left table td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px;
+}
 
+#save{
+    display: none;
 }

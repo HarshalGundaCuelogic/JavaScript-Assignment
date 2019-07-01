@@ -4,6 +4,7 @@ function enable_fields()
     document.getElementById("lname").disabled = false;
     document.getElementById("address").disabled = false;
     document.getElementById("password").disabled = false;
+    document.getElementById("submit").disabled = false;
 
     for(let i=0;i<(document.getElementsByName("gender").length);i++)
     {
@@ -19,8 +20,9 @@ function validations()
     let address = document.getElementById("address").value;
     let emailid = document.getElementById("email").value;
     let passwd = document.getElementById("password").value;
+    let gender = document.querySelector('input[name="gender"]:checked').value;
     /* let conf_passwd = document.getElementById("confirm_password").value; */
-    
+    alert(gender);
     // Here, regular expression for every field is written 
     let regex_first_name = /^([a-zA-Z]{3,})$/;
     let regex_last_name = /^[a-zA-Z]{3,}$/;
@@ -32,7 +34,7 @@ function validations()
        (passwd.match(regex_passwd)) /* &&
        (conf_passwd.match(passwd)) */)
     {   
-        let bRet = StoreItems(first_name,last_name,address,emailid,passwd)
+        let bRet = StoreItems(first_name,last_name,address,emailid,passwd,gender)
         alert("Your changes has been saved successfully");
         window.location = '../html/todo_page.html';
     }
@@ -43,20 +45,20 @@ function validations()
     }
 }
 
-function StoreItems(first_name,last_name,address,emailid,passwd)
+function StoreItems(first_name,last_name,address,emailid,passwd,gender)
 {   
+    let code_array = JSON.parse(localStorage.getItem("local_storage_array"));
     let user_id =  sessionStorage.getItem("logged_in_user");
-    let user_info = {
-        'first_name_user' : first_name,
-        'last_name_user' : last_name,
-        'address_user' : address,
-        'email_user' : emailid,
-        'password_user' : passwd
-    }
-    /* console.log(user_info.email_user); */
+    let code_todo_array = code_array[user_id].to_do_user;
 
-    let code_array = JSON.parse(localStorage.getItem('local_storage_array'));
-    code_array[user_id] = user_info;
+    code_array[user_id].first_name_user = first_name;
+    code_array[user_id].last_name_user = last_name;
+    code_array[user_id].address_user = address;
+    code_array[user_id].email_user = emailid;
+    code_array[user_id].password_user = passwd;
+    code_array[user_id].to_do_user = code_todo_array;
+    code_array[user_id].gender_user = gender;
+    
     localStorage.setItem("local_storage_array",JSON.stringify(code_array));
     return true;
 }
@@ -71,15 +73,19 @@ function set_logged_in_user_values()
     document.getElementById("address").value = code_array[user_id].address_user;
     document.getElementById("email").value = code_array[user_id].email_user;
     document.getElementById("password").value = code_array[user_id].password_user;
-    /* let gender_array = document.getElementsByName("gender");
-    
-    alert(gender_array[1].value);
 
-    for(let i = 0; i < gender_array.length; i++)
+    if(code_array[user_id].gender_user == "male")
     {
-        if(gender_array[i] == code_array[user_id].gender_user)
-        {
-            gender_array[i].checked = true;
-        }
-    } */
+        document.getElementsByName("gender")[0].checked = true;
+    }
+    else if(code_array[user_id].gender_user == "female")
+    {
+        document.getElementsByName("gender")[1].checked = true;
+    }
+    else
+    {
+        document.getElementsByName("gender")[2].checked = true;
+    }
+
+    /* document.querySelector('input[name="categories"]:checked').value = code_array[user_id].gender_user; */
 }

@@ -59,7 +59,6 @@ function StoreItems(first_name,last_name,address,emailid,passwd,gender_type)
 
     if(code_array == null)
     {
-        alert("array not exists, so made new array in local storage");
         code_array = [];
 
         code_array.push(user_info);
@@ -68,8 +67,6 @@ function StoreItems(first_name,last_name,address,emailid,passwd,gender_type)
     }
     else
     {
-        alert("array is exists already");
-
         let i=0;
         for(i=0; i<code_array.length;i++)
         {
@@ -81,7 +78,6 @@ function StoreItems(first_name,last_name,address,emailid,passwd,gender_type)
 
         if(i == code_array.length)
         {   
-            alert("email id is new");
             code_array.push(user_info);
             localStorage.setItem("local_storage_array",JSON.stringify(code_array));
             return true;
