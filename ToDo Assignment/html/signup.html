@@ -33,8 +33,8 @@
                 <h4>It's free and always will be.</h4>
 
                 <figure>
-                    <img src="../images/profile_picture.png" alt="Profile Photo" width="150" height="150"><br>
-                    <input type="file" accept="image/*">
+                    <img id="user_pic" src="../images/profile_picture.png" alt="Profile Photo" width="150" height="150"><br>
+                    <input id="profile_picture" type="file" accept="image/*" onchange="upload_profile_picture();">
                 </figure>
 
                 <input id="fname" type="text" placeholder="First Name" title="Minimum 3 characters are required" required>

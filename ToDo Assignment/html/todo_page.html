@@ -32,20 +32,60 @@
             <div class="container">
 
               <div class="left">
-                  <input type="text" id="" placeholder="Search your todo's here...">
-                  <button type="button" id="search">Search</button>
-                  <button type="button" id="update" onclick="edit_todo_item();">Edit</button>
-                  <button type="button" id="delete" onclick="delete_todo_item();">Delete</button>
+                  <input type="text" id="searchbar" placeholder="Search your todo's here...">
+                  <div id="left_form_buttons">
+                    <button type="button" id="search">Search</button>
+                    <button type="button" id="update" onclick="edit_todo_item();">Edit</button>
+                    <button type="button" id="delete" onclick="delete_todo_item();">Delete</button>
+                    <button type="button" id="status" onclick="mark_done();">Mark as done</button>
+                  </div>
+
+                  <label for="">Filter By :</label>
+                  <select name="filters" id="filterby" onchange="filter_todo()">
+                    <option value="select" selected>Select</option>
+                    <option value="categories">Categories</option>
+                    <option value="status">Status</option>
+                    <option value="date">Date</option>
+                  </select>
+
+                  <select name="filters" id="filter_status" onchange="filter_todo_by_status();">
+                      <option value="select" selected>Select</option>
+                      <option value="done">isDone</option>
+                      <option value="pending">isPending</option>
+                  </select>
+
+                  <select name="filters" id="filter_categories" onchange="filter_todo_by_categories();">
+                      <option value="select" selected>Select</option>
+                      <option value="Home">Home</option>
+                      <option value="Personal">Personal</option>
+                      <option value="Office">Office</option>
+                  </select>
+
+                  <div id="date_filters">
+                      <label for="">From :</label>
+                      <input type="date" name="" id="filter_sdate" required>
+
+                      <label for="">To :</label>
+                      <input type="date" name="" id="filter_ddate" required onchange="">
+                  </div>
+
                   <table id="todo_table">
-                      <tr>
-                          <th>Select</th>
-                          <th>To Do Name</th>
-                          <th>Start Date</th>
-                          <th>Due Date</th>
-                          <th>is Public</th>      
-                          <th>Categories</th>
-                          <th>Description</th>
-                      </tr>
+                      <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>To Do Name</th>
+                            <th>Start Date</th>
+                            <th>Due Date</th>
+                            <th>is Public</th>      
+                            <th>Categories</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                      </thead>
+
+                      <tbody id="todo_table_body">
+
+                      </tbody>
                   </table>
               </div>
                 

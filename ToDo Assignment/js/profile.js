@@ -5,6 +5,7 @@ function enable_fields()
     document.getElementById("address").disabled = false;
     document.getElementById("password").disabled = false;
     document.getElementById("submit").disabled = false;
+    document.getElementById("profile_picture").disabled = false;
 
     for(let i=0;i<(document.getElementsByName("gender").length);i++)
     {
@@ -22,7 +23,7 @@ function validations()
     let passwd = document.getElementById("password").value;
     let gender = document.querySelector('input[name="gender"]:checked').value;
     /* let conf_passwd = document.getElementById("confirm_password").value; */
-    alert(gender);
+    
     // Here, regular expression for every field is written 
     let regex_first_name = /^([a-zA-Z]{3,})$/;
     let regex_last_name = /^[a-zA-Z]{3,}$/;
@@ -36,11 +37,13 @@ function validations()
     {   
         let bRet = StoreItems(first_name,last_name,address,emailid,passwd,gender)
         alert("Your changes has been saved successfully");
+        sessionStorage.removeItem("display_picture");
         window.location = '../html/todo_page.html';
     }
     else
     {
         alert("Invalid Credentials");
+        sessionStorage.removeItem("display_picture");
         window.location.reload();
     }
 }
@@ -58,7 +61,8 @@ function StoreItems(first_name,last_name,address,emailid,passwd,gender)
     code_array[user_id].password_user = passwd;
     code_array[user_id].to_do_user = code_todo_array;
     code_array[user_id].gender_user = gender;
-    
+    code_array[user_id].display_picture = sessionStorage.display_picture;
+
     localStorage.setItem("local_storage_array",JSON.stringify(code_array));
     return true;
 }
@@ -73,6 +77,7 @@ function set_logged_in_user_values()
     document.getElementById("address").value = code_array[user_id].address_user;
     document.getElementById("email").value = code_array[user_id].email_user;
     document.getElementById("password").value = code_array[user_id].password_user;
+    document.getElementById("user_pic").src = code_array[user_id].display_picture;
 
     if(code_array[user_id].gender_user == "male")
     {
@@ -88,4 +93,26 @@ function set_logged_in_user_values()
     }
 
     /* document.querySelector('input[name="categories"]:checked').value = code_array[user_id].gender_user; */
+}
+
+function upload_profile_picture()
+{
+    let Image = document.getElementById("profile_picture").files[0];
+
+    getimgbase64(Image);
+
+    function getimgbase64(Image)
+    {
+        let imagereader = new FileReader();
+        imagereader.readAsDataURL(Image);
+
+        imagereader.onload = function () {
+            let imgdata = imagereader.result;
+            sessionStorage.setItem("display_picture",imgdata);
+            document.getElementById("user_pic").src = sessionStorage.display_picture;
+        };
+
+        imagereader.onerror = function (error) {
+        };
+    }
 }

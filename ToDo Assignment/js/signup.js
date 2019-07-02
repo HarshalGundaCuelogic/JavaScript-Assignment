@@ -28,6 +28,7 @@ function validations()
         if(bRet == true)
         {
             alert("Your form has been submitted successfully");
+            sessionStorage.removeItem("display_picture");
             window.location = '../html/login.html';
         }
         else
@@ -44,6 +45,9 @@ function validations()
 function StoreItems(first_name,last_name,address,emailid,passwd,gender_type)
 {   
     let to_do_list = new Array();
+    
+    let profile_picture = sessionStorage.display_picture;
+
     let user_info = {
         'first_name_user' : first_name,
         'last_name_user' : last_name,
@@ -51,7 +55,8 @@ function StoreItems(first_name,last_name,address,emailid,passwd,gender_type)
         'email_user' : emailid,
         'password_user' : passwd,
         'gender_user': gender_type,
-        'to_do_user' : to_do_list
+        'to_do_user' : to_do_list,
+        'display_picture' : profile_picture
     }
     /* console.log(user_info.email_user); */
 
@@ -87,5 +92,27 @@ function StoreItems(first_name,last_name,address,emailid,passwd,gender_type)
             alert("Email ID already exists");
             return false;
         }
+    }
+}
+
+function upload_profile_picture()
+{
+    let Image = document.getElementById("profile_picture").files[0];
+
+    getimgbase64(Image);
+
+    function getimgbase64(Image)
+    {
+        let imagereader = new FileReader();
+        imagereader.readAsDataURL(Image);
+
+        imagereader.onload = function () {
+            let imgdata = imagereader.result;
+            sessionStorage.setItem("display_picture",imgdata);
+            document.getElementById("user_pic").src = sessionStorage.display_picture;
+        };
+
+        imagereader.onerror = function (error) {
+        };
     }
 }

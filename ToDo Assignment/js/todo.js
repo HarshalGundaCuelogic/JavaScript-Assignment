@@ -48,7 +48,8 @@ function add_todo_item()
 		'end_date' : ddate,
 		'is_public' : ispublictrue,
 		'categories' : categories,
-		'description' : desc
+		'description' : desc,
+		'status' : 'pending'
 	}
 
 	code_array[user_id].to_do_user.push(todo_obj);
@@ -79,6 +80,17 @@ function show_users_todo_on_page_load()
 	let code_array = JSON.parse(localStorage.getItem("local_storage_array"));
 	let code_todo_array = code_array[user_id].to_do_user;
 
+	/* let new_table = document.createElement("table id='todo_table'");
+	new_table.innerHTML = "<tr>" + 
+							"<th>" + 'Select' + "</th>" + 
+							"<th>" + 'To Do Name' + "</th>" + 
+							"<th>" + 'Start Date' + "</th>" + 
+							"<th>" + 'Due Date' + "</th>" + 
+							"<th>" + 'is Public' + "</th>" + 
+							"<th>" + 'Categories' + "</th>" + 
+							"<th>" + 'Description' + "</th>" + 
+						"</tr>"; */
+
 	for(let i=0; i<(code_todo_array.length); i++)
 	{
 		let new_row = document.createElement("tr");
@@ -89,9 +101,10 @@ function show_users_todo_on_page_load()
 							"<td>" + code_todo_array[i].end_date + "</td>" +
 							"<td>" + code_todo_array[i].is_public + "</td>" +
 							"<td>" + code_todo_array[i].categories + "</td>" +
-							"<td>" + code_todo_array[i].description + "</td>" ;
+							"<td>" + "<button class='read_todo' onclick='read_desc()'>View</button" + "</td>" +
+							"<td>" + code_todo_array[i].status + "</td>";
 
-		document.getElementById("todo_table").appendChild(new_row);
+		document.getElementById("todo_table_body").appendChild(new_row);
 	}
 }
 
@@ -244,3 +257,290 @@ function save_changes()
 	localStorage.setItem("local_storage_array",JSON.stringify(code_array));
 	sessionStorage.removeItem("todo_array_index");
 }
+
+function mark_done()
+{
+	let code_array = JSON.parse(localStorage.getItem("local_storage_array"));	//fetching the array from local storage
+	
+	let user_id = sessionStorage.getItem("logged_in_user");		//fetching which user is logged in (its index in users array)
+
+	let select_items_checkbox = document.getElementsByName("selected_checkbox");	//array of the checkboxes
+
+	let flag = 0;
+
+	for(iCnt = 0; iCnt <= (select_items_checkbox.length-1); iCnt++)	
+    {
+    	if(select_items_checkbox[iCnt].checked === true)	//if item is checked for moved to done
+        {
+			flag++;
+			code_array[user_id].to_do_user[iCnt].status = "done";
+        }
+	}
+
+	if(flag == 0)
+	{
+		alert("Select the items to mark as done")
+	}
+	else
+	{
+		localStorage.setItem("local_storage_array",JSON.stringify(code_array));
+		window.location.reload();
+	}
+}
+
+function filter_todo()
+{
+	filter_value = document.getElementById("filterby").value;
+
+	if(filter_value == "categories")
+	{
+		document.getElementById("filter_status").style.display = "none";
+		document.getElementById("filter_categories").style.display = "inline-block";
+		document.getElementById("date_filters").style.display = "none";
+	}
+	else if(filter_value == "status")
+	{
+		document.getElementById("filter_status").style.display = "inline-block";
+		document.getElementById("filter_categories").style.display = "none";
+		document.getElementById("date_filters").style.display = "none";
+	}
+	else if(filter_value == "date")
+	{
+		document.getElementById("filter_status").style.display = "none";
+		document.getElementById("filter_categories").style.display = "none";
+		document.getElementById("date_filters").style.display = "inline-block";
+	}
+	else
+	{
+		let code_array = JSON.parse(localStorage.getItem("local_storage_array"));	//fetching the array from local storage
+		let user_id = sessionStorage.getItem("logged_in_user");		//fetching which user is logged in (its index in users array)
+		let code_todo_array = code_array[user_id].to_do_user;	//fetching todo array of that user
+		/* show_users_todo_on_page_load(); */
+		document.getElementById("filter_status").style.display = "none";
+		document.getElementById("filter_categories").style.display = "none";
+		document.getElementById("date_filters").style.display = "none";
+		clearTable();
+
+		for(let i=0; i<(code_todo_array.length); i++)
+		{
+			let new_row = document.createElement("tr");
+
+			new_row.innerHTML = "<td>" + "<input name='selected_checkbox' type='checkbox' value='yes'" + "</td>" + 
+								"<td>" + code_todo_array[i].todo_name + "</td>" + 
+								"<td>" + code_todo_array[i].start_date + "</td>" +
+								"<td>" + code_todo_array[i].end_date + "</td>" +
+								"<td>" + code_todo_array[i].is_public + "</td>" +
+								"<td>" + code_todo_array[i].categories + "</td>" +
+								"<td>" + "<button class='read_todo' onclick='read_desc()'>View</button" + "</td>" +
+								"<td>" + code_todo_array[i].status + "</td>";
+
+			document.getElementById("todo_table_body").appendChild(new_row);
+		}
+	}
+}
+
+function filter_todo_by_categories()
+{
+	let code_array = JSON.parse(localStorage.getItem("local_storage_array"));	//fetching the array from local storage
+	let user_id = sessionStorage.getItem("logged_in_user");		//fetching which user is logged in (its index in users array)
+	let code_todo_array = code_array[user_id].to_do_user;	//fetching todo array of that user
+
+	let filter_value_categories = document.getElementById("filter_categories").value;
+
+	if(filter_value_categories == "Home")
+	{
+		let home_user_array = code_todo_array.filter(function(category_home){
+				return(category_home.categories === "Home")
+				})
+
+		//document.getElementById("todo_table_body").style.display = "none";
+
+		clearTable();
+
+		for(let i = 0; i<(home_user_array.length); i++)
+		{
+			let new_row = document.createElement("tr");
+
+			new_row.innerHTML = "<td>" + "<input name='selected_checkbox' type='checkbox' value='yes'" + "</td>" + 
+								"<td>" + home_user_array[i].todo_name + "</td>" + 
+								"<td>" + home_user_array[i].start_date + "</td>" +
+								"<td>" + home_user_array[i].end_date + "</td>" +
+								"<td>" + home_user_array[i].is_public + "</td>" +
+								"<td>" + home_user_array[i].categories + "</td>" +
+								"<td>" + "<button class='read_todo' onclick='read_desc()'>View</button" + "</td>" +
+								"<td>" + home_user_array[i].status + "</td>";
+
+			document.getElementById("todo_table_body").appendChild(new_row);
+		}
+	}
+	else if(filter_value_categories == "Personal")
+	{
+		let personal_user_array = code_todo_array.filter(function(category_personal){
+				return(category_personal.categories === "Personal")
+				})
+		
+		clearTable();
+
+		for(let i = 0; i<(personal_user_array.length); i++)
+		{
+			let new_row = document.createElement("tr");
+		
+			new_row.innerHTML = "<td>" + "<input name='selected_checkbox' type='checkbox' value='yes'" + "</td>" + 
+								"<td>" + personal_user_array[i].todo_name + "</td>" + 
+								"<td>" + personal_user_array[i].start_date + "</td>" +
+								"<td>" + personal_user_array[i].end_date + "</td>" +
+								"<td>" + personal_user_array[i].is_public + "</td>" +
+								"<td>" + personal_user_array[i].categories + "</td>" +
+								"<td>" + "<button class='read_todo' onclick='read_desc()'>View</button" + "</td>" +
+								"<td>" + code_todo_array[i].status + "</td>";
+		
+			document.getElementById("todo_table_body").appendChild(new_row);
+		}
+	}
+	else if(filter_value_categories == "Office")
+	{
+		let office_user_array = code_todo_array.filter(function(category_office){
+				return(category_office.categories === "Office")
+				})
+		
+		clearTable();
+		
+		for(let i = 0; i<(office_user_array.length); i++)
+		{
+			let new_row = document.createElement("tr");
+				
+			new_row.innerHTML = "<td>" + "<input name='selected_checkbox' type='checkbox' value='yes'" + "</td>" + 
+								"<td>" + office_user_array[i].todo_name + "</td>" + 
+								"<td>" + office_user_array[i].start_date + "</td>" +
+								"<td>" + office_user_array[i].end_date + "</td>" +
+								"<td>" + office_user_array[i].is_public + "</td>" +
+								"<td>" + office_user_array[i].categories + "</td>" +
+								"<td>" + "<button class='read_todo' onclick='read_desc()'>View</button" + "</td>" +
+								"<td>" + office_user_array[i].status + "</td>";
+				
+			document.getElementById("todo_table_body").appendChild(new_row);
+		}
+	}
+	else
+	{
+		clearTable();
+
+		for(let i=0; i<(code_todo_array.length); i++)
+		{
+			let new_row = document.createElement("tr");
+
+			new_row.innerHTML = "<td>" + "<input name='selected_checkbox' type='checkbox' value='yes'" + "</td>" + 
+								"<td>" + code_todo_array[i].todo_name + "</td>" + 
+								"<td>" + code_todo_array[i].start_date + "</td>" +
+								"<td>" + code_todo_array[i].end_date + "</td>" +
+								"<td>" + code_todo_array[i].is_public + "</td>" +
+								"<td>" + code_todo_array[i].categories + "</td>" +
+								"<td>" + "<button class='read_todo' onclick='read_desc()'>View</button" + "</td>" +
+								"<td>" + code_todo_array[i].status + "</td>";
+
+			document.getElementById("todo_table_body").appendChild(new_row);
+		}
+	}
+}
+
+function filter_todo_by_status()
+{
+	let code_array = JSON.parse(localStorage.getItem("local_storage_array"));	//fetching the array from local storage
+	let user_id = sessionStorage.getItem("logged_in_user");		//fetching which user is logged in (its index in users array)
+	let code_todo_array = code_array[user_id].to_do_user;	//fetching todo array of that user
+
+	let filter_value_status = document.getElementById("filter_status").value;
+
+	if(filter_value_status == "done")
+	{
+		let status_done_array = code_todo_array.filter(function(done_status){
+			return(done_status.status === "done")
+			})
+
+		clearTable();
+		
+		for(let i=0; i<status_done_array.length; i++)
+		{
+			let new_row = document.createElement("tr");
+				
+			new_row.innerHTML = "<td>" + "<input name='selected_checkbox' type='checkbox' value='yes'" + "</td>" + 
+								"<td>" + status_done_array[i].todo_name + "</td>" + 
+								"<td>" + status_done_array[i].start_date + "</td>" +
+								"<td>" + status_done_array[i].end_date + "</td>" +
+								"<td>" + status_done_array[i].is_public + "</td>" +
+								"<td>" + status_done_array[i].categories + "</td>" +
+								"<td>" + "<button class='read_todo' onclick='read_desc()'>View</button" + "</td>" +
+								"<td>" + status_done_array[i].status + "</td>";
+				
+			document.getElementById("todo_table_body").appendChild(new_row);
+		}
+
+	}
+	else if(filter_value_status == "pending")
+	{
+		let pending_done_array = code_todo_array.filter(function(pending_status){
+			return(pending_status.status === "pending")
+			})
+
+		clearTable();
+
+		for(let i=0; i<pending_done_array.length; i++)
+		{
+			let new_row = document.createElement("tr");
+				
+			new_row.innerHTML = "<td>" + "<input name='selected_checkbox' type='checkbox' value='yes'" + "</td>" + 
+								"<td>" + pending_done_array[i].todo_name + "</td>" + 
+								"<td>" + pending_done_array[i].start_date + "</td>" +
+								"<td>" + pending_done_array[i].end_date + "</td>" +
+								"<td>" + pending_done_array[i].is_public + "</td>" +
+								"<td>" + pending_done_array[i].categories + "</td>" +
+								"<td>" + "<button class='read_todo' onclick='read_desc()'>View</button" + "</td>" +
+								"<td>" + pending_done_array[i].status + "</td>";
+				
+			document.getElementById("todo_table_body").appendChild(new_row);
+		}
+	}
+	else
+	{
+		clearTable();
+
+		for(let i=0; i<(code_todo_array.length); i++)
+		{
+			let new_row = document.createElement("tr");
+
+			new_row.innerHTML = "<td>" + "<input name='selected_checkbox' type='checkbox' value='yes'" + "</td>" + 
+								"<td>" + code_todo_array[i].todo_name + "</td>" + 
+								"<td>" + code_todo_array[i].start_date + "</td>" +
+								"<td>" + code_todo_array[i].end_date + "</td>" +
+								"<td>" + code_todo_array[i].is_public + "</td>" +
+								"<td>" + code_todo_array[i].categories + "</td>" +
+								"<td>" + "<button class='read_todo' onclick='read_desc()'>View</button" + "</td>" +
+								"<td>" + code_todo_array[i].status + "</td>";
+
+			document.getElementById("todo_table_body").appendChild(new_row);
+		}
+	}
+}
+
+function clearTable()
+{
+	let table_body = document.getElementById("todo_table_body");
+	let deleterow = table_body.lastElementChild;
+
+	while(deleterow)
+	{
+		table_body.removeChild(deleterow);
+		deleterow = table_body.lastElementChild;
+	}
+}
+
+/* function read_desc()
+{
+	let index = sessionStorage.getItem("todo_array_index");
+	
+	let code_array = JSON.parse(localStorage.getItem("local_storage_array"));	//fetching the array from local storage
+	
+	let user_id = sessionStorage.getItem("logged_in_user");		//fetching which user is logged in (its index in users array)
+
+	let read_array = 
+} */

@@ -15,7 +15,7 @@ h1{
 }
 
 .container{
-    width: 1200px;
+    width: 1250px;
     margin: 0 auto;
 }
 
@@ -74,26 +74,25 @@ header h1{
     padding-bottom: 30px;
 }
 
-.section1 button[type="button"], .section1 button[type="reset"]{
-    padding: 10px;
+.section1 button[type="button"], .section1 button[type="reset"], #searchby{
+    padding: 5px 10px;
     border-radius: 10px;
     background-color: #e64031;
     color: black;
     margin-left: 10px;
     display: inline-block;
-    border-color: black;
     margin: 20px 10px;
 }
 
 .section1 .left{
-    width: 60%;
+    width: 65%;
     display: inline-block;
     line-height: 25px;
 }
 
 .section1 .right{
     text-align: center;
-    width: 40%;
+    width: 35%;
     float: right;
 }
 
@@ -141,6 +140,7 @@ header h1{
 .left table{
     width: 100%;
     text-align: center;
+    margin-top: 20px;
     border: 1px solid black;
     border-collapse: collapse;
 }
@@ -152,5 +152,53 @@ header h1{
 }
 
 #save{
+    padding: 10px;
+    border-radius: 10px;
+    color: black;
+    margin-left: 10px;
+    display: inline-block;
+    margin: 20px 10px;
     display: none;
+}
+
+#searchbar{
+    width: 100%;
+}
+
+.left table button{
+    width: 80%;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #e64031;
+    color: black;
+    display: inline-block;
+}
+
+#filter_categories, #filter_status{
+    padding: 5px 10px; 
+    margin-left: 10px;
+    border-radius: 10px;
+    display: none;
+}
+
+#date_filters{
+    /* display: inline-block; */
+    margin-left: 5px;
+    display: none;
+}
+
+#filterby{
+    border-radius: 10px;
+    color: black;
+    margin-left: 10px;
+    display: inline-block;
+    padding: 5px 10px;
+}
+
+#date_filters label{
+    margin-left: 10px;
+}
+
+#date_filters input{
+    height: 33px;
 }
