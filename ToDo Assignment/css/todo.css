@@ -152,12 +152,12 @@ header h1{
 }
 
 #save{
-    padding: 10px;
+    padding: 5px 10px;
     border-radius: 10px;
     color: black;
+    background-color: #e64031;
     margin-left: 10px;
     display: inline-block;
-    margin: 20px 10px;
     display: none;
 }
 
@@ -182,7 +182,6 @@ header h1{
 }
 
 #date_filters{
-    /* display: inline-block; */
     margin-left: 5px;
     display: none;
 }
@@ -195,10 +194,11 @@ header h1{
     padding: 5px 10px;
 }
 
-#date_filters label{
-    margin-left: 10px;
-}
+/* #date_filters label{
+    margin-left: 5px;
+} */
 
 #date_filters input{
     height: 33px;
+    width: 30%;
 }

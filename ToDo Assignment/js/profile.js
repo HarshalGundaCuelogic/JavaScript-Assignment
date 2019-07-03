@@ -22,18 +22,16 @@ function validations()
     let emailid = document.getElementById("email").value;
     let passwd = document.getElementById("password").value;
     let gender = document.querySelector('input[name="gender"]:checked').value;
-    /* let conf_passwd = document.getElementById("confirm_password").value; */
     
     // Here, regular expression for every field is written 
     let regex_first_name = /^([a-zA-Z]{3,})$/;
     let regex_last_name = /^[a-zA-Z]{3,}$/;
-    let regex_passwd = /^[a-zA-Z]{3,}$/;
+    let regex_passwd = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
 
     // condition to check whether each field is valid or not
     if((first_name.match(regex_first_name)) &&
        (last_name.match(regex_last_name)) &&
-       (passwd.match(regex_passwd)) /* &&
-       (conf_passwd.match(passwd)) */)
+       (passwd.match(regex_passwd)))
     {   
         let bRet = StoreItems(first_name,last_name,address,emailid,passwd,gender)
         alert("Your changes has been saved successfully");
@@ -61,7 +59,15 @@ function StoreItems(first_name,last_name,address,emailid,passwd,gender)
     code_array[user_id].password_user = passwd;
     code_array[user_id].to_do_user = code_todo_array;
     code_array[user_id].gender_user = gender;
-    code_array[user_id].display_picture = sessionStorage.display_picture;
+
+    if(sessionStorage.getItem('display_picture') === null)
+    {
+        //donothing
+    }
+    else
+    {
+        code_array[user_id].display_picture = sessionStorage.display_picture;
+    }
 
     localStorage.setItem("local_storage_array",JSON.stringify(code_array));
     return true;
@@ -71,7 +77,7 @@ function set_logged_in_user_values()
 {
     let code_array = JSON.parse(localStorage.getItem("local_storage_array"));
     let user_id =  sessionStorage.getItem("logged_in_user");
-
+    document.getElementById("welcome_user").innerHTML = "Hello, " + code_array[user_id].first_name_user;
     document.getElementById("fname").value = code_array[user_id].first_name_user;
     document.getElementById("lname").value = code_array[user_id].last_name_user;
     document.getElementById("address").value = code_array[user_id].address_user;

@@ -12,13 +12,13 @@ function validations()
     // Here, regular expression for every field is written 
     let regex_first_name = /^([a-zA-Z]{3,})$/;
     let regex_last_name = /^[a-zA-Z]{3,}$/;
-    let regex_emailid = /^[a-zA-Z]{3,}$/; // /^([A-Za-z0-9_\-\.])+\@([a-z]){4,}\.([a-z]{2,4})$/; 
-    let regex_passwd = /^[a-zA-Z]{3,}$/;
+    let regex_emailid = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    let regex_passwd = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
 
     // condition to check whether each field is valid or not
     if((first_name.match(regex_first_name)) &&
        (last_name.match(regex_last_name)) &&
-       /* (emailid.match(regex_emailid)) && */
+       (emailid.match(regex_emailid)) &&
        (passwd.match(regex_passwd)) &&
        (conf_passwd.match(passwd)))
     {   

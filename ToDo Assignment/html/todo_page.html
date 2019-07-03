@@ -32,13 +32,7 @@
             <div class="container">
 
               <div class="left">
-                  <input type="text" id="searchbar" placeholder="Search your todo's here...">
-                  <div id="left_form_buttons">
-                    <button type="button" id="search">Search</button>
-                    <button type="button" id="update" onclick="edit_todo_item();">Edit</button>
-                    <button type="button" id="delete" onclick="delete_todo_item();">Delete</button>
-                    <button type="button" id="status" onclick="mark_done();">Mark as done</button>
-                  </div>
+                  <!-- <input type="text" id="searchbar" placeholder="Search your todo's here..."> -->
 
                   <label for="">Filter By :</label>
                   <select name="filters" id="filterby" onchange="filter_todo()">
@@ -63,10 +57,19 @@
 
                   <div id="date_filters">
                       <label for="">From :</label>
-                      <input type="date" name="" id="filter_sdate" required>
+                      <input type="date" id="filter_sdate" required>
 
                       <label for="">To :</label>
-                      <input type="date" name="" id="filter_ddate" required onchange="">
+                      <input type="date" id="filter_ddate" required>
+
+                      <button type="button" id="search_by_date" onclick="filter_todo_by_date();">Search</button>
+                  </div>
+
+                  <div id="left_form_buttons">
+                    <!-- <button type="button" id="search">Search</button> -->
+                    <button type="button" id="edit" onclick="edit_todo_item();">Edit</button>
+                    <button type="button" id="delete" onclick="delete_todo_item();">Delete</button>
+                    <button type="button" id="status" onclick="mark_done();">Mark as done</button>
                   </div>
 
                   <table id="todo_table">
@@ -80,6 +83,7 @@
                             <th>Categories</th>
                             <th>Description</th>
                             <th>Status</th>
+                            <!-- <th>Edit</th> -->
                         </tr>
                       </thead>
 
