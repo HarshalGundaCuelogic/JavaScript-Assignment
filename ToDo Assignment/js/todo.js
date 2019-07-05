@@ -90,6 +90,12 @@ function show_users_todo_on_page_load()
 	let code_array = JSON.parse(localStorage.getItem("local_storage_array"));
 	let code_todo_array = code_array[user_id].to_do_user;
 
+	if(code_todo_array.length == 0)
+	{
+		document.getElementsByClassName("left")[0].style.display = "none";
+		document.getElementById("noDataFound").style.display = "inline-block";
+	}
+	
 	let current_date = new Date();
 	let month = ('0' + (current_date.getMonth() + 1)).slice(-2);
 	let date = ('0' + current_date.getDate()).slice(-2);
@@ -145,6 +151,7 @@ function delete_todo_item()
 		}
 
 		localStorage.setItem("local_storage_array",JSON.stringify(code_array));		//set the changes in the local storage
+		window.location.reload();
 	}
 }
 

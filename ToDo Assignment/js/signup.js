@@ -22,23 +22,38 @@ function validations()
        (passwd.match(regex_passwd)) &&
        (conf_passwd.match(passwd)))
     {   
-        alert("all elements are valid");
         let bRet = StoreItems(first_name,last_name,address,emailid,passwd,gender_type)
 
         if(bRet == true)
         {
-            alert("Your form has been submitted successfully");
+            alert("Registered successfully");
             sessionStorage.removeItem("display_picture");
             window.location = '../html/login.html';
         }
-        else
+        /* else
         {
-            window.location.reload();
-        }
+
+        } */
     }
-    else
+    else if(!first_name.match(regex_first_name))
     {
-        window.location.reload();
+        alert("First Name should contain only alphabets");
+    }
+    else if(!last_name.match(regex_last_name))
+    {
+        alert("Last Name should contain only alphabets");
+    }
+    else if(!emailid.match(regex_emailid))
+    {
+        alert("Please enter the proper email");
+    }
+    else if(!passwd.match(regex_passwd))
+    {
+        alert("Password must be 8-15 characters which contains at least a capital letter, a small letter, a number and a special symbol");
+    }
+    else if(!conf_passwd.match(passwd))
+    {
+        alert("Confirm password should be same as the entered password");
     }
 }
 
@@ -46,6 +61,12 @@ function StoreItems(first_name,last_name,address,emailid,passwd,gender_type)
 {   
     let to_do_list = new Array();
     
+    if(sessionStorage.getItem('display_picture') === null)
+    {
+        alert("Please upload your profile picture");
+        return false;
+    }
+    let enc_pass = CryptoJS.MD5(passwd);
     let profile_picture = sessionStorage.display_picture;
 
     let user_info = {
@@ -53,12 +74,11 @@ function StoreItems(first_name,last_name,address,emailid,passwd,gender_type)
         'last_name_user' : last_name,
         'address_user' : address,
         'email_user' : emailid,
-        'password_user' : passwd,
+        'password_user' : enc_pass,
         'gender_user': gender_type,
         'to_do_user' : to_do_list,
         'display_picture' : profile_picture
     }
-    /* console.log(user_info.email_user); */
 
     let code_array = JSON.parse(localStorage.getItem('local_storage_array'));
 

@@ -36,13 +36,24 @@ function validations()
         let bRet = StoreItems(first_name,last_name,address,emailid,passwd,gender)
         alert("Your changes has been saved successfully");
         sessionStorage.removeItem("display_picture");
-        window.location = '../html/todo_page.html';
+        window.location.reload();
+    }
+    else if(!first_name.match(regex_first_name))
+    {
+        alert("First Name should contain only alphabets");
+    }
+    else if(!last_name.match(regex_last_name))
+    {
+        alert("Last Name should contain only alphabets");
+    }
+    else if(!passwd.match(regex_passwd))
+    {
+        alert("Password must be 8-15 characters which contains at least a capital letter, a small letter, a number and a special symbol");
     }
     else
     {
         alert("Invalid Credentials");
         sessionStorage.removeItem("display_picture");
-        window.location.reload();
     }
 }
 

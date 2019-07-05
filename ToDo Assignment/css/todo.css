@@ -202,3 +202,8 @@ header h1{
     height: 33px;
     width: 30%;
 }
+
+#noDataFound{
+    display: none;
+    margin-left: 7px;
+}
