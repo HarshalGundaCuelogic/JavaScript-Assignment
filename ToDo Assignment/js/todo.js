@@ -99,17 +99,6 @@ function show_users_todo_on_page_load()
 	document.getElementById("sdate").min = current_date;
 	document.getElementById("ddate").min = current_date;
 
-	/* let new_table = document.createElement("table id='todo_table'");
-	new_table.innerHTML = "<tr>" + 
-							"<th>" + 'Select' + "</th>" + 
-							"<th>" + 'To Do Name' + "</th>" + 
-							"<th>" + 'Start Date' + "</th>" + 
-							"<th>" + 'Due Date' + "</th>" + 
-							"<th>" + 'is Public' + "</th>" + 
-							"<th>" + 'Categories' + "</th>" + 
-							"<th>" + 'Description' + "</th>" + 
-						"</tr>"; */
-
 	PrintTable(code_todo_array);
 }
 
