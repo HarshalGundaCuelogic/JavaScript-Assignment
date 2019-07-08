@@ -1,13 +1,13 @@
 function logoutUser()
 {
 	sessionStorage.removeItem("loggedInUser");
-	alert("Logged out successfully");
 }
 
 function addToDoItem()
 {	
 	let userId =  sessionStorage.getItem("loggedInUser");
 	let codeArray = JSON.parse(localStorage.getItem("localStorageArray"));
+	let codeToDoArray = codeArray[userId].toDoUser;
 
 	let myInput = document.getElementById("myInput").value;
 	let sDate = document.getElementById("sDate").value;
@@ -66,22 +66,15 @@ function addToDoItem()
 
 	localStorage.setItem("localStorageArray",JSON.stringify(codeArray));
 
-	/* let codeToDoArray = codeArray[userId].toDoUser;
+	if(codeToDoArray.length > 0)
+	{
+		document.getElementById("noDataFound").style.display = "none";
+		document.getElementById("left").style.display = "inline-block";
+	}
 
-	let arrLength = (codeToDoArray.length)-1;
-	
-	let newRow = document.createElement("tr");
-	
-	newRow.innerHTML = "<td>" + "<input type='checkbox' class='select_todo' value='yes'" + "</td>" + 
-						"<td>" + codeToDoArray[arrLength].toDoName + "</td>" + 
-						"<td>" + codeToDoArray[arrLength].startDate + "</td>" +
-						"<td>" + codeToDoArray[arrLength].endDate + "</td>" +
-						"<td>" + codeToDoArray[arrLength].isPublic + "</td>" +
-						"<td>" + codeToDoArray[arrLength].categories + "</td>" +
-						"<td>" + codeToDoArray[arrLength].description + "</td>" ;
-
-	document.getElementById("todo_table").appendChild(newRow); */
-	window.location.reload();
+	clearTable();
+	printTable(codeArray[userId].toDoUser);
+	document.getElementById("add_todo").reset();
 }
 
 function showUsersToDoOnPageLoad()
@@ -105,7 +98,7 @@ function showUsersToDoOnPageLoad()
 	document.getElementById("sDate").min = currentDate;
 	document.getElementById("dDate").min = currentDate;
 
-	PrintTable(codeToDoArray);
+	printTable(codeToDoArray);
 }
 
 function deleteToDoItem()
@@ -149,7 +142,15 @@ function deleteToDoItem()
 		}
 
 		localStorage.setItem("localStorageArray",JSON.stringify(codeArray));		//set the changes in the local storage
-		window.location.reload();
+		
+		clearTable();
+		printTable(codeToDoArray);
+
+		if(codeToDoArray.length == 0)
+		{
+			document.getElementById("left").remove();
+			document.getElementById("noDataFound").style.display = "inline-block";
+		}
 	}
 }
 
@@ -166,33 +167,6 @@ function editToDoItem()
 	let flag = 0;
 	let iCnt = 0;
 	let edit_item = 0;
-
-	/* let checkedArray = [];
-	let toDoString;
-	let toDoId;
-
-	for(let iCnt = 0; iCnt < (checkboxItemsArray.length); iCnt++)	
-	{
-		toDoString = checkboxItemsArray[iCnt].id;
-		toDoId = toDoString.split("-");
-
-		if(document.getElementById("checkbox-"+toDoId[1]).checked == true)
-		{
-			checkedArray.push(toDoId[1]);
-		}
-	}
-
-	for(let jCnt = checkedArray.length-1; jCnt >= 0 ;jCnt--)
-	{
-		for(let k = 0; k < codeToDoArray.length; k++)
-		{
-			if(checkedArray[jCnt] == codeToDoArray[k].id)
-			{
-				codeArray[userId].toDoUser.splice(k,1);
-				document.getElementById("row-"+checkedArray[jCnt]).remove();
-			}
-		}
-	} */
 
 	//find the checked elements from the array which wants to delete
     for(iCnt = (codeArray[userId].toDoUser.length-1); iCnt >= 0; iCnt--)	
@@ -326,46 +300,37 @@ function markDone()
 	else
 	{
 		localStorage.setItem("localStorageArray",JSON.stringify(codeArray));
-		window.location.reload();
+		clearTable();
+		printTable(codeArray[userId].toDoUser);
 	}
 }
 
 function filterToDo()
 {
-	filter_value = document.getElementById("filterby").value;
+	filterValue = document.getElementById("filterby").value;
 
-	if(filter_value == "categories")
+	if(filterValue == "categories")
 	{
-		document.getElementById("filter_status").style.display = "none";
-		document.getElementById("filter_categories").style.display = "inline-block";
-		document.getElementById("date_filters").style.display = "none";
+		setFilteredValues("none","inline-block","none");
 	}
-	else if(filter_value == "status")
+	else if(filterValue == "status")
 	{
-		document.getElementById("filter_status").style.display = "inline-block";
-		document.getElementById("filter_categories").style.display = "none";
-		document.getElementById("date_filters").style.display = "none";
+		setFilteredValues("inline-block","none","none");
 	}
-	else if(filter_value == "date")
+	else if(filterValue == "date")
 	{
-		document.getElementById("filter_status").style.display = "none";
-		document.getElementById("filter_categories").style.display = "none";
-		document.getElementById("date_filters").style.display = "inline-block";
+		setFilteredValues("none","none","inline-block");
 	}
 	else
 	{
 		let codeArray = JSON.parse(localStorage.getItem("localStorageArray"));	//fetching the array from local storage
 		let userId = sessionStorage.getItem("loggedInUser");		//fetching which user is logged in (its index in users array)
-		let codeToDoArray = codeArray[userId].toDoUser;	//fetching todo array of that user
-		/* show_users_todo_on_page_load(); */
-		document.getElementById("filter_status").style.display = "none";
-		document.getElementById("filter_categories").style.display = "none";
-		document.getElementById("date_filters").style.display = "none";
+		let codeToDoArray = codeArray[userId].toDoUser;			//fetching todo array of that user
+		
+		setFilteredValues("none","none","none");
 		clearTable();
-
-		PrintTable(codeToDoArray);
+		printTable(codeToDoArray);
 	}
-
 }
 
 function filterToDoByCategories()
@@ -382,11 +347,9 @@ function filterToDoByCategories()
 				return(categoryHome.categories === "Home")
 				})
 
-		//document.getElementById("todo_table_body").style.display = "none";
-
 		clearTable();
 
-		PrintTable(homeUserArray);
+		printTable(homeUserArray);
 		return homeUserArray;
 	}
 	else if(filterValueCategories == "Personal")
@@ -397,7 +360,7 @@ function filterToDoByCategories()
 		
 		clearTable();
 
-		PrintTable(personalUserArray);
+		printTable(personalUserArray);
 		return personalUserArray;
 	}
 	else if(filterValueCategories == "Office")
@@ -408,14 +371,14 @@ function filterToDoByCategories()
 		
 		clearTable();
 		
-		PrintTable(officeUserArray);
+		printTable(officeUserArray);
 		return officeUserArray;
 	}
 	else
 	{
 		clearTable();
 
-		PrintTable(codeToDoArray);
+		printTable(codeToDoArray);
 		return codeToDoArray;
 	}
 }
@@ -426,32 +389,32 @@ function filterToDoByStatus()
 	let userId = sessionStorage.getItem("loggedInUser");		//fetching which user is logged in (its index in users array)
 	let codeToDoArray = codeArray[userId].toDoUser;	//fetching todo array of that user
 
-	let filter_value_status = document.getElementById("filter_status").value;
+	let filterValueStatus = document.getElementById("filter_status").value;
 
-	if(filter_value_status == "done")
+	if(filterValueStatus == "done")
 	{
-		let status_done_array = codeToDoArray.filter(function(done_status){
-			return(done_status.status === "done")
+		let statusDoneArray = codeToDoArray.filter(function(doneStatus){
+			return(doneStatus.status === "done")
 			})
 
 		clearTable();	
-		PrintTable(status_done_array);
-		return status_done_array;
+		printTable(statusDoneArray);
+		return statusDoneArray;
 	}
-	else if(filter_value_status == "pending")
+	else if(filterValueStatus == "pending")
 	{
-		let pending_done_array = codeToDoArray.filter(function(pending_status){
-			return(pending_status.status === "pending")
+		let pendingDoneArray = codeToDoArray.filter(function(pendingStatus){
+			return(pendingStatus.status === "pending")
 			})
 
 		clearTable();
-		PrintTable(pending_done_array);
-		return pending_done_array;
+		printTable(pendingDoneArray);
+		return pendingDoneArray;
 	}
 	else
 	{
 		clearTable();
-		PrintTable(codeToDoArray);
+		printTable(codeToDoArray);
 		return codeToDoArray;
 	}
 }
@@ -494,39 +457,8 @@ function filterToDoByDate()
 
 		clearTable();
 		
-		PrintTable(dateArray);
+		printTable(dateArray);
 		return(dateArray);
-	}
-}
-
-function clearTable()
-{
-	let tableBody = document.getElementById("todo_table_body");
-	let deleteRow = tableBody.lastElementChild;
-
-	while(deleteRow)
-	{
-		tableBody.removeChild(deleteRow);
-		deleteRow = tableBody.lastElementChild;
-	}
-}
-
-function PrintTable(arr)
-{
-	for(let i=0; i<arr.length; i++)
-	{
-		let newRow = document.createElement("tr");
-		newRow.setAttribute("id", "row-" + arr[i].id);
-		newRow.innerHTML = "<td>" + "<input name='selectedCheckbox' type='checkbox' value='yes' id='checkbox-" + arr[i].id + "' </td>" + 
-							"<td>" + arr[i].toDoName + "</td>" + 
-							"<td>" + arr[i].startDate + "</td>" +
-							"<td>" + arr[i].endDate + "</td>" +
-							"<td>" + arr[i].isPublic + "</td>" +
-							"<td>" + arr[i].categories + "</td>" +
-							"<td>" + "<button class='read_todo' id='view-" + arr[i].id + "' onclick='readDesc(" + i + ")'>View</button" + "</td>" +
-							"<td>" + arr[i].status + "</td>";
-				
-		document.getElementById("todo_table_body").appendChild(newRow);
 	}
 }
 
@@ -545,4 +477,44 @@ function readDesc(i)
 	}
 	
 	alert(filteredArray[i].description);
+}
+
+/*-------------------- Reusable functions ------------------------ */
+
+function clearTable()
+{
+	let tableBody = document.getElementById("todo_table_body");
+	let deleteRow = tableBody.lastElementChild;
+
+	while(deleteRow)
+	{
+		tableBody.removeChild(deleteRow);
+		deleteRow = tableBody.lastElementChild;
+	}
+}
+
+function printTable(arr)
+{
+	for(let i=0; i<arr.length; i++)
+	{
+		let newRow = document.createElement("tr");
+		newRow.setAttribute("id", "row-" + arr[i].id);
+		newRow.innerHTML = "<td>" + "<input name='selectedCheckbox' type='checkbox' value='yes' id='checkbox-" + arr[i].id + "' </td>" + 
+							"<td>" + arr[i].toDoName + "</td>" + 
+							"<td>" + arr[i].startDate + "</td>" +
+							"<td>" + arr[i].endDate + "</td>" +
+							"<td>" + arr[i].isPublic + "</td>" +
+							"<td>" + arr[i].categories + "</td>" +
+							"<td>" + "<button class='read_todo' id='view-" + arr[i].id + "' onclick='readDesc(" + i + ")'>View</button" + "</td>" +
+							"<td>" + arr[i].status + "</td>";
+				
+		document.getElementById("todo_table_body").appendChild(newRow);
+	}
+}
+
+function setFilteredValues(status,categories,date)
+{
+	document.getElementById("filter_status").style.display = status;
+	document.getElementById("filter_categories").style.display = categories;
+	document.getElementById("date_filters").style.display = date;
 }
