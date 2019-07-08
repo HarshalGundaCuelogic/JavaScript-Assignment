@@ -10,7 +10,7 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700&display=swap" rel="stylesheet"> 
     </head>
 
-    <body onload="set_logged_in_user_values();">
+    <body onload="setLoggedInUserValues();">
         <header>
             <div class="container">
                 <a href="./todo_page.html"><img src="../images/todoist_logo.png" alt="Todoist Logo" width="160" height="66"></a>
@@ -25,17 +25,17 @@
             </div>
         </header>
 
-        <form name="profilepage">
+        <form>
             <div class="container">
-                <h1 id="welcome_user"></h1>
+                <h1 id="welcomeUser"></h1>
 
                 <figure>
-                    <img id="user_pic" src="../images/profile_picture.png" alt="Profile Photo" width="170" height="170"><br>
-                    <input id="profile_picture" type="file" accept="image/*" onchange="upload_profile_picture();" disabled>
+                    <img id="userPic" src="../images/profile_picture.png" alt="Profile Photo" width="170" height="170"><br>
+                    <input id="profilePicture" type="file" accept="image/*" onchange="uploadProfilePicture();" disabled>
                 </figure>
 
-                <input id="fname" type="text" placeholder="First Name" disabled>
-                <input id="lname" type="text" placeholder="Last Name" disabled><br>
+                <input id="fName" type="text" placeholder="First Name" disabled>
+                <input id="lName" type="text" placeholder="Last Name" disabled><br>
                 <input id="address" type="text" placeholder="Address" disabled><br>
                 <input id="email" type="email" placeholder="Email ID" disabled><br>
                 <input id="password" type="password" placeholder="Password" disabled><br>
@@ -46,8 +46,8 @@
                     <input type="radio" name="gender" value="other" disabled>Other
                 </div>
 
-                <button type="button" onclick="enable_fields();">Edit</button>
-                <button type="button" id="submit" onclick="validations();" disabled>Submit</button>
+                <button type="button" onclick="enableFields();">Edit</button>
+                <button type="button" id="submit" onclick="Validations();" disabled>Submit</button>
             </div>
         </form>
     </body>

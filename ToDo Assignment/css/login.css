@@ -66,12 +66,11 @@ input[type="email"], input[type="password"]{
     margin-bottom: 20px;
 }
 
-button[type="submit"]{
+button[type="button"]{
     padding: 10px 15px;
     border-radius: 15px;
     background-color: #e64031;
     color: black;
     margin: 10px 10px 0px;
     display: inline-block;
-    border-color: black;
 }
