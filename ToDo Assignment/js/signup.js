@@ -66,7 +66,9 @@ function StoreItems(first_name,last_name,address,emailid,passwd,gender_type)
         alert("Please upload your profile picture");
         return false;
     }
-    let enc_pass = CryptoJS.MD5(passwd);
+    //let enc_pass = CryptoJS.MD5(passwd);
+    let enc_pass = CryptoJS.AES.encrypt(passwd, "cuelogic");
+
     let profile_picture = sessionStorage.display_picture;
 
     let user_info = {

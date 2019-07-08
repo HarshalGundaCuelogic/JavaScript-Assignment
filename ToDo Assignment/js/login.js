@@ -55,18 +55,24 @@ function FetchItems(emailid,passwd)
         for(index=0; index<code_array.length;index++)   //checking for valid email and password for that email
         {
             //email and password both matches
-            if(((code_array[index].email_user) == emailid) && ((code_array[index].password_user) == passwd))
+            if((code_array[index].email_user) == emailid) /* && ((code_array[index].password_user) == passwd) */
             {
-                sessionStorage.setItem("logged_in_user",index);
-                flag = true;
-                break;  //create session here and break
-            }
-            //email found but matching password is not found
-            else if(((code_array[index].email_user) == emailid) && ((code_array[index].password_user) != passwd)) 
-            {
-                alert("Wrong Password");
-                flag = false;
-                break;
+                let dec_pass = CryptoJS.AES.decrypt(code_array[index].password_user, "cuelogic");
+
+                decrypted_pass = dec_pass.toString(CryptoJS.enc.Utf8);
+
+                if(decrypted_pass == passwd)
+                {
+                    sessionStorage.setItem("logged_in_user",index);     //create session here and break
+                    flag = true;
+                    break;
+                }
+                else if(decrypted_pass != passwd)   //email found but matching password is not found
+                {
+                    alert("Wrong Password");
+                    flag = false;
+                    break;
+                }        
             }
             else
             {
