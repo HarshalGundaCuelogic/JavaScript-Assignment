@@ -87,3 +87,12 @@ function FetchItems(emailId,passwd)
         }
     }
 }
+
+(function (){
+    document.addEventListener('keypress',function(event){
+        if(event.keyCode == 13)
+        {
+            Validity();
+        }
+    })
+})();

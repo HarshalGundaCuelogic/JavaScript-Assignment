@@ -93,7 +93,7 @@ function setLoggedInUserValues()
     document.getElementById("lName").value = codeArray[userId].lastNameUser;
     document.getElementById("address").value = codeArray[userId].addressUser;
     document.getElementById("email").value = codeArray[userId].emailUser;
-    document.getElementById("password").value = codeArray[userId].passwordUser;
+    document.getElementById("password").value = atob(codeArray[userId].passwordUser);
     document.getElementById("userPic").src = codeArray[userId].displayPicture;
 
     if(codeArray[userId].genderUser == "male")
@@ -126,3 +126,12 @@ function uploadProfilePicture()
     imageReader.onerror = function (error) {
     };
 }
+
+(function (){
+    document.addEventListener('keypress',function(event){
+        if((event.keyCode == 13) && (document.getElementById("submit").disabled == false))
+        {
+            Validations();
+        }
+    })
+})();

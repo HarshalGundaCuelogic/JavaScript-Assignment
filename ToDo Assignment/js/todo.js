@@ -518,3 +518,12 @@ function setFilteredValues(status,categories,date)
 	document.getElementById("filter_categories").style.display = categories;
 	document.getElementById("date_filters").style.display = date;
 }
+
+(function (){
+    document.addEventListener('keypress',function(event){
+        if(event.keyCode == 13)
+        {
+            addToDoItem();
+        }
+    })
+})();
