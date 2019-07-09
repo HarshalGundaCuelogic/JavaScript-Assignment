@@ -1,44 +1,44 @@
-function check_validity()
-{
+function Validity() 
+{   
     //fetching the data from the form
-    let emailid = document.getElementById("email").value;
+    let emailId = document.getElementById("email").value;
     let passwd = document.getElementById("password").value;
 
-    /* let regex_emailid = /^[a-zA-Z]{3,}$/; */ // /^([A-Za-z0-9_\-\.])+\@([a-z]){4,}\.([a-z]{2,4})$/;
+    let RegexEmailId = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    let RegexPasswd = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
 
     //applying email validation
-    if(true) //if email validations are true
-    {   
-        let bRet = FetchItems(emailid,passwd)
+    if((emailId.match(RegexEmailId)) &&
+       (passwd.match(RegexPasswd)))
+    {  
+        let bRet = FetchItems(emailId,passwd)
 
         if(bRet == true)
         {
-            alert("Successfully logged in");
             window.location = '../html/todo_page.html';
         }
         else
         {
-            window.location.reload;
+            return;
         }
     }   
-    else    //email validations are false
+    else if(!emailId.match(RegexEmailId))   //email validations are false
     {
         alert("Invalid Email");
-        window.location.reload;
+    }
+    else if(!passwd.match(RegexPasswd))    //password validations are false
+    {
+        alert("Password must be 8-15 characters which contains at least a capital letter, a small letter, a number and a special symbol");
     }
 }
 
-function FetchItems(emailid,passwd)
+function FetchItems(emailId,passwd)
 {   
-    let user_info = {
-        'email_user' : emailid,
-        'password_user' : passwd
-    }
+    let CodeArray = JSON.parse(localStorage.getItem('localStorageArray'));
 
-    let code_array = JSON.parse(localStorage.getItem('local_storage_array'));
-
-    if(code_array == null)
+    if(CodeArray == null)
     {
+        alert("No records found");
         return false;
     }
     else
@@ -46,21 +46,25 @@ function FetchItems(emailid,passwd)
         let flag = true;
         let index = 0;
 
-        for(index=0; index<code_array.length;index++)   //checking for valid email and password for that email
+        for(index=0; index<CodeArray.length; index++)   //checking for valid email and password for that email
         {
             //email and password both matches
-            if(((code_array[index].email_user) == emailid) && ((code_array[index].password_user) == passwd))
+            if((CodeArray[index].emailUser) === emailId) /* && ((CodeArray[index].password_user) == passwd) */
             {
-                sessionStorage.setItem("logged_in_user",index);
-                flag = true;
-                break;//create session here and break
-            }
-            //email found but matching password is not found
-            else if(((code_array[index].email_user) == emailid) && ((code_array[index].password_user) != passwd)) 
-            {
-                alert("Wrong Password");
-                flag = false;
-                break;
+                let decryptedPassword = atob(CodeArray[index].passwordUser);
+
+                if(decryptedPassword == passwd)
+                {
+                    sessionStorage.setItem("loggedInUser",index);     //create session here and break
+                    flag = true;
+                    break;
+                }
+                else if(decryptedPassword != passwd)   //email found but matching password is not found
+                {
+                    alert("Wrong Password");
+                    flag = false;
+                    break;
+                }        
             }
             else
             {
@@ -68,7 +72,7 @@ function FetchItems(emailid,passwd)
             }
         }
 
-        if((index == code_array.length) && (flag == false)) //no records found
+        if((index == CodeArray.length) && (flag == false)) //no records found
         {   
             alert("No records found!!!");
             return false;
@@ -83,3 +87,12 @@ function FetchItems(emailid,passwd)
         }
     }
 }
+
+(function (){
+    document.addEventListener('keypress',function(event){
+        if(event.keyCode == 13)
+        {
+            Validity();
+        }
+    })
+})();

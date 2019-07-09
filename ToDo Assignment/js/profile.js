@@ -1,11 +1,11 @@
-function enable_fields()
+function enableFields()
 {
-    document.getElementById("fname").disabled = false;
-    document.getElementById("lname").disabled = false;
+    document.getElementById("fName").disabled = false;
+    document.getElementById("lName").disabled = false;
     document.getElementById("address").disabled = false;
     document.getElementById("password").disabled = false;
     document.getElementById("submit").disabled = false;
-    document.getElementById("profile_picture").disabled = false;
+    document.getElementById("profilePicture").disabled = false;
 
     for(let i=0;i<(document.getElementsByName("gender").length);i++)
     {
@@ -13,83 +13,94 @@ function enable_fields()
     }
 }
 
-function validations()
+function Validations()
 {
     // fetching the fields from the form
-    let first_name = document.getElementById("fname").value;
-    let last_name = document.getElementById("lname").value;
+    let firstName = document.getElementById("fName").value;
+    let lastName = document.getElementById("lName").value;
     let address = document.getElementById("address").value;
-    let emailid = document.getElementById("email").value;
+    let emailId = document.getElementById("email").value;
     let passwd = document.getElementById("password").value;
-    let gender = document.querySelector('input[name="gender"]:checked').value;
+    let genderType = document.querySelector('input[name="gender"]:checked').value;
     
     // Here, regular expression for every field is written 
-    let regex_first_name = /^([a-zA-Z]{3,})$/;
-    let regex_last_name = /^[a-zA-Z]{3,}$/;
-    let regex_passwd = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+    let regexFirstName = /^([a-zA-Z]{3,})$/;
+    let regexLastName = /^[a-zA-Z]{3,}$/;
+    let regexPasswd = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
 
     // condition to check whether each field is valid or not
-    if((first_name.match(regex_first_name)) &&
-       (last_name.match(regex_last_name)) &&
-       (passwd.match(regex_passwd)))
+    if((firstName.match(regexFirstName)) &&
+       (lastName.match(regexLastName)) &&
+       (passwd.match(regexPasswd)))
     {   
-        let bRet = StoreItems(first_name,last_name,address,emailid,passwd,gender)
+        StoreItems(firstName,lastName,address,emailId,passwd,genderType)
         alert("Your changes has been saved successfully");
-        sessionStorage.removeItem("display_picture");
-        window.location = '../html/todo_page.html';
+        sessionStorage.removeItem("displayPicture");
+        window.location.reload();
+    }
+    else if(!firstName.match(regexFirstName))
+    {
+        alert("First Name should contain only alphabets");
+    }
+    else if(!lastName.match(regexLastName))
+    {
+        alert("Last Name should contain only alphabets");
+    }
+    else if(!passwd.match(regexPasswd))
+    {
+        alert("Password must be 8-15 characters which contains at least a capital letter, a small letter, a number and a special symbol");
     }
     else
     {
         alert("Invalid Credentials");
-        sessionStorage.removeItem("display_picture");
-        window.location.reload();
+        sessionStorage.removeItem("displayPicture");
     }
 }
 
-function StoreItems(first_name,last_name,address,emailid,passwd,gender)
+function StoreItems(firstName,lastName,address,emailId,passwd,genderType)
 {   
-    let code_array = JSON.parse(localStorage.getItem("local_storage_array"));
-    let user_id =  sessionStorage.getItem("logged_in_user");
-    let code_todo_array = code_array[user_id].to_do_user;
+    let codeArray = JSON.parse(localStorage.getItem("localStorageArray"));
+    let userId = sessionStorage.getItem("loggedInUser");
+    let codeToDoArray = codeArray[userId].toDoUser;
 
-    code_array[user_id].first_name_user = first_name;
-    code_array[user_id].last_name_user = last_name;
-    code_array[user_id].address_user = address;
-    code_array[user_id].email_user = emailid;
-    code_array[user_id].password_user = passwd;
-    code_array[user_id].to_do_user = code_todo_array;
-    code_array[user_id].gender_user = gender;
+    codeArray[userId].firstNameUser = firstName;
+    codeArray[userId].lastNameUser = lastName;
+    codeArray[userId].addressUser = address;
+    codeArray[userId].emailUser = emailId;
+    codeArray[userId].passwordUser = btoa(passwd);
+    codeArray[userId].toDoUser = codeToDoArray;
+    codeArray[userId].genderUser = genderType;
 
-    if(sessionStorage.getItem('display_picture') === null)
+    if(sessionStorage.getItem('displayPicture') === null)
     {
         //donothing
     }
     else
     {
-        code_array[user_id].display_picture = sessionStorage.display_picture;
+        codeArray[userId].displayPicture = sessionStorage.displayPicture;
     }
 
-    localStorage.setItem("local_storage_array",JSON.stringify(code_array));
-    return true;
+    localStorage.setItem("localStorageArray",JSON.stringify(codeArray));
 }
 
-function set_logged_in_user_values()
+function setLoggedInUserValues()
 {
-    let code_array = JSON.parse(localStorage.getItem("local_storage_array"));
-    let user_id =  sessionStorage.getItem("logged_in_user");
-    document.getElementById("welcome_user").innerHTML = "Hello, " + code_array[user_id].first_name_user;
-    document.getElementById("fname").value = code_array[user_id].first_name_user;
-    document.getElementById("lname").value = code_array[user_id].last_name_user;
-    document.getElementById("address").value = code_array[user_id].address_user;
-    document.getElementById("email").value = code_array[user_id].email_user;
-    document.getElementById("password").value = code_array[user_id].password_user;
-    document.getElementById("user_pic").src = code_array[user_id].display_picture;
+    let codeArray = JSON.parse(localStorage.getItem("localStorageArray"));
+    let userId =  sessionStorage.getItem("loggedInUser");
+    document.getElementById("welcomeUser").innerHTML = "Hello, " + codeArray[userId].firstNameUser;
+    
+    document.getElementById("fName").value = codeArray[userId].firstNameUser;
+    document.getElementById("lName").value = codeArray[userId].lastNameUser;
+    document.getElementById("address").value = codeArray[userId].addressUser;
+    document.getElementById("email").value = codeArray[userId].emailUser;
+    document.getElementById("password").value = atob(codeArray[userId].passwordUser);
+    document.getElementById("userPic").src = codeArray[userId].displayPicture;
 
-    if(code_array[user_id].gender_user == "male")
+    if(codeArray[userId].genderUser == "male")
     {
         document.getElementsByName("gender")[0].checked = true;
     }
-    else if(code_array[user_id].gender_user == "female")
+    else if(codeArray[userId].genderUser == "female")
     {
         document.getElementsByName("gender")[1].checked = true;
     }
@@ -97,28 +108,30 @@ function set_logged_in_user_values()
     {
         document.getElementsByName("gender")[2].checked = true;
     }
-
-    /* document.querySelector('input[name="categories"]:checked').value = code_array[user_id].gender_user; */
 }
 
-function upload_profile_picture()
+function uploadProfilePicture()
 {
-    let Image = document.getElementById("profile_picture").files[0];
+    let Image = document.getElementById("profilePicture").files[0];
 
-    getimgbase64(Image);
+    let imageReader = new FileReader();
+    imageReader.readAsDataURL(Image);
 
-    function getimgbase64(Image)
-    {
-        let imagereader = new FileReader();
-        imagereader.readAsDataURL(Image);
+    imageReader.onload = function () {
+        let imgData = imageReader.result;
+        sessionStorage.setItem("displayPicture",imgData);
+        document.getElementById("userPic").src = sessionStorage.displayPicture;
+    };
 
-        imagereader.onload = function () {
-            let imgdata = imagereader.result;
-            sessionStorage.setItem("display_picture",imgdata);
-            document.getElementById("user_pic").src = sessionStorage.display_picture;
-        };
-
-        imagereader.onerror = function (error) {
-        };
-    }
+    imageReader.onerror = function (error) {
+    };
 }
+
+(function (){
+    document.addEventListener('keypress',function(event){
+        if((event.keyCode == 13) && (document.getElementById("submit").disabled == false))
+        {
+            Validations();
+        }
+    })
+})();

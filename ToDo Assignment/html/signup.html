@@ -33,16 +33,16 @@
                 <h4>It's free and always will be.</h4>
 
                 <figure>
-                    <img id="user_pic" src="../images/profile_picture.png" alt="Profile Photo" width="150" height="150"><br>
-                    <input id="profile_picture" type="file" accept="image/*" onchange="upload_profile_picture();">
+                    <img id="userPic" src="../images/profile_picture.png" alt="Profile Photo" width="150" height="150"><br>
+                    <input id="profilePicture" type="file" accept="image/*" onchange="UploadProfilePicture();">
                 </figure>
 
-                <input id="fname" type="text" placeholder="First Name" title="Minimum 3 characters are required" required>
-                <input id="lname" type="text" placeholder="Last Name" title="Minimum 3 characters are required" required><br>
-                <input id="address" type="text" placeholder="Address"><br>
+                <input id="fName" type="text" placeholder="First Name" title="Minimum 3 characters are required" required>
+                <input id="lName" type="text" placeholder="Last Name" title="Minimum 3 characters are required" required><br>
                 <input id="email" type="email" placeholder="Email ID" title="Enter a valid email id" required><br>
                 <input id="password" type="password" placeholder="Password" title="Password must be 8-15 characters which contains at least a capital letter, a small letter, a number and a special symbol" required><br>
-                <input id="confirm_password" type="password" placeholder="Confirm Password" title="This password should be same as the above password" required><br>
+                <input id="confirmPassword" type="password" placeholder="Confirm Password" title="This password should be same as the above password" required><br>
+                <input id="address" type="text" placeholder="Address"><br>
 
                 <div class="radio">
                     <input type="radio" name="gender" value="male" checked>Male
@@ -51,10 +51,9 @@
                 </div>
                 
                 <button type="reset">Reset Form</button>
-                <button type="button" onclick="validations();">Register</button>
+                <button type="button" onclick="Validations();">Register</button>
             </div>
         </form>
-        <marquee direction="right" truespeed="1000">todoist sign up</marquee>
     </body>
 
 </html>

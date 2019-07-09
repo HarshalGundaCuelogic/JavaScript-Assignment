@@ -12,7 +12,7 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700&display=swap" rel="stylesheet">
     </head>
 
-    <body onload="show_users_todo_on_page_load();">
+    <body onload="showUsersToDoOnPageLoad();">
         <header>
           <div class="container">
             <a href="./todo_page.html"><img src="../images/todoist_logo.png" alt="Todoist Logo" width="160" height="66"></a>
@@ -20,7 +20,7 @@
             <nav>
               <ul>
                 <li><a href="./profile_page.html">My Profile</a></li>
-                <li><a href="./login.html" onclick="logout_user();">Logout</a></li>
+                <li><a href="./login.html" onclick="logoutUser();">Logout</a></li>
                 <div class="clearfix"></div>
               </ul>
               <div class="clearfix"></div>
@@ -30,25 +30,24 @@
 
         <section class="section1">
             <div class="container">
-
-              <div class="left">
-                  <!-- <input type="text" id="searchbar" placeholder="Search your todo's here..."> -->
+              <h1 id="noDataFound">No Data Found</h1>
+              <div class="left" id="left">
 
                   <label for="">Filter By :</label>
-                  <select name="filters" id="filterby" onchange="filter_todo()">
+                  <select name="filters" id="filterby" onchange="filterToDo()">
                     <option value="select" selected>Select</option>
                     <option value="categories">Categories</option>
                     <option value="status">Status</option>
                     <option value="date">Date</option>
                   </select>
 
-                  <select name="filters" id="filter_status" onchange="filter_todo_by_status();">
+                  <select name="filters" id="filter_status" onchange="filterToDoByStatus();">
                       <option value="select" selected>Select</option>
                       <option value="done">isDone</option>
                       <option value="pending">isPending</option>
                   </select>
 
-                  <select name="filters" id="filter_categories" onchange="filter_todo_by_categories();">
+                  <select name="filters" id="filter_categories" onchange="filterToDoByCategories();">
                       <option value="select" selected>Select</option>
                       <option value="Home">Home</option>
                       <option value="Personal">Personal</option>
@@ -62,14 +61,14 @@
                       <label for="">To :</label>
                       <input type="date" id="filter_ddate" required>
 
-                      <button type="button" id="search_by_date" onclick="filter_todo_by_date();">Search</button>
+                      <button type="button" id="search_by_date" onclick="filterToDoByDate();">Search</button>
                   </div>
 
                   <div id="left_form_buttons">
                     <!-- <button type="button" id="search">Search</button> -->
-                    <button type="button" id="edit" onclick="edit_todo_item();">Edit</button>
-                    <button type="button" id="delete" onclick="delete_todo_item();">Delete</button>
-                    <button type="button" id="status" onclick="mark_done();">Mark as done</button>
+                    <button type="button" id="edit" onclick="editToDoItem();">Edit</button>
+                    <button type="button" id="delete" onclick="deleteToDoItem();">Delete</button>
+                    <button type="button" id="status" onclick="markDone();">Mark as done</button>
                   </div>
 
                   <table id="todo_table">
@@ -83,7 +82,6 @@
                             <th>Categories</th>
                             <th>Description</th>
                             <th>Status</th>
-                            <!-- <th>Edit</th> -->
                         </tr>
                       </thead>
 
@@ -94,18 +92,18 @@
               </div>
                 
               <div class="right">
-                <form name="add_todo">
+                <form id="add_todo">
                   <input type="text" placeholder="Title..." id="myInput" required><br>
 
                   <label>Start Date :</label>
-                  <input type="date" id="sdate" required><br>
+                  <input type="date" id="sDate" required><br>
 
                   <label>Due Date :</label>
-                  <input type="date" id="ddate" required><br>
+                  <input type="date" id="dDate" required><br>
 
                   <div class="public">
                     <label>is Public :</label>
-                    <input type="checkbox" id="ispublictrue">
+                    <input type="checkbox" id="isPublicTrue">
                   </div>
 
                   <label>Categories :</label>
@@ -115,8 +113,8 @@
 
                   <textarea id="description" rows="10" placeholder="Your description here..."></textarea><br>
 
-                  <button type="button" id="add" onclick="add_todo_item();">Add</button>
-                  <button type="submit" id="save" onclick="save_changes();">Save Changes</button>
+                  <button type="button" id="add" onclick="addToDoItem();">Add</button>
+                  <button type="submit" id="save" onclick="saveChanges();">Save Changes</button>
                   <button type="reset">Reset</button>
                 </form>
               </div>

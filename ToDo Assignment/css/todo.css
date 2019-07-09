@@ -202,3 +202,10 @@ header h1{
     height: 33px;
     width: 30%;
 }
+
+#noDataFound{
+    display: none;
+    text-align: center;
+    font-size: 50px;
+    color: black;
+}
