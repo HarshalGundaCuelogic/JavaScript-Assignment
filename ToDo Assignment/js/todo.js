@@ -79,6 +79,12 @@ function addToDoItem()
 
 function showUsersToDoOnPageLoad()
 {
+	if((localStorage.getItem('localStorageArray') === null) || (sessionStorage.getItem('loggedInUser') === null))
+	{
+		window.location = "../html/home.html"
+		return;
+	}
+
 	let userId =  sessionStorage.getItem("loggedInUser");
 	let codeArray = JSON.parse(localStorage.getItem("localStorageArray"));
 	let codeToDoArray = codeArray[userId].toDoUser;

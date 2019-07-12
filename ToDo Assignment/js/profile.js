@@ -85,6 +85,12 @@ function StoreItems(firstName,lastName,address,emailId,passwd,genderType)
 
 function setLoggedInUserValues()
 {
+    if((localStorage.getItem('localStorageArray') === null) || (sessionStorage.getItem('loggedInUser') === null))
+	{
+		window.location = "../html/home.html"
+		return;
+	}
+    
     let codeArray = JSON.parse(localStorage.getItem("localStorageArray"));
     let userId =  sessionStorage.getItem("loggedInUser");
     document.getElementById("welcomeUser").innerHTML = "Hello, " + codeArray[userId].firstNameUser;
