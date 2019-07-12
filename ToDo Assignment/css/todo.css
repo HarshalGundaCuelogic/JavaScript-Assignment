@@ -137,7 +137,7 @@ header h1{
     padding: 10px 20px 10px 20px;
 }
 
-.left table{
+#todo_table{
     width: 100%;
     text-align: center;
     margin-top: 20px;
@@ -145,7 +145,7 @@ header h1{
     border-collapse: collapse;
 }
 
-.left table th,.left table td{
+#todo_table th,#todo_table td{
     border: 1px solid black;
     border-collapse: collapse;
     padding: 5px;
@@ -165,7 +165,7 @@ header h1{
     width: 100%;
 }
 
-.left table button{
+#todo_table button{
     width: 80%;
     padding: 5px;
     border-radius: 10px;

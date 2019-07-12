@@ -30,7 +30,6 @@
 
         <section class="section1">
             <div class="container">
-              <h1 id="noDataFound">No Data Found</h1>
               <div class="left" id="left">
 
                   <label for="">Filter By :</label>
@@ -56,10 +55,10 @@
 
                   <div id="date_filters">
                       <label for="">From :</label>
-                      <input type="date" id="filter_sdate" required>
+                      <input type="date" id="filterStartDate" required>
 
                       <label for="">To :</label>
-                      <input type="date" id="filter_ddate" required>
+                      <input type="date" id="filterDueDate" required>
 
                       <button type="button" id="search_by_date" onclick="filterToDoByDate();">Search</button>
                   </div>
@@ -86,9 +85,9 @@
                       </thead>
 
                       <tbody id="todo_table_body">
-
                       </tbody>
                   </table>
+                  <h1 id="noDataFound">No Data Found</h1>
               </div>
                 
               <div class="right">

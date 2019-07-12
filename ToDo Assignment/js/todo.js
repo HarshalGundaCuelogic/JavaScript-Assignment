@@ -68,8 +68,8 @@ function addToDoItem()
 
 	if(codeToDoArray.length > 0)
 	{
+		document.getElementById("todo_table").style.display = "inline-table";
 		document.getElementById("noDataFound").style.display = "none";
-		document.getElementById("left").style.display = "inline-block";
 	}
 
 	clearTable();
@@ -91,7 +91,7 @@ function showUsersToDoOnPageLoad()
 
 	if(codeToDoArray.length == 0)
 	{
-		document.getElementsByClassName("left")[0].style.display = "none";
+		document.getElementById("todo_table").style.display = "none";
 		document.getElementById("noDataFound").style.display = "inline-block";
 	}
 	
@@ -154,7 +154,7 @@ function deleteToDoItem()
 
 		if(codeToDoArray.length == 0)
 		{
-			document.getElementById("left").remove();
+			document.getElementById("todo_table").style.display = "none";
 			document.getElementById("noDataFound").style.display = "inline-block";
 		}
 	}
@@ -352,40 +352,80 @@ function filterToDoByCategories()
 		let homeUserArray = codeToDoArray.filter(function(categoryHome){
 				return(categoryHome.categories === "Home")
 				})
+		
+		if(homeUserArray.length == 0)
+		{
+			document.getElementById("todo_table").style.display = "none";
+			document.getElementById("noDataFound").style.display = "inline-block";
+		}
+		else
+		{
+			document.getElementById("noDataFound").style.display = "none";
+			document.getElementById("todo_table").style.display = "inline-table";
+			clearTable();
 
-		clearTable();
-
-		printTable(homeUserArray);
-		return homeUserArray;
+			printTable(homeUserArray);
+			return homeUserArray;
+		}
 	}
 	else if(filterValueCategories == "Personal")
 	{
 		let personalUserArray = codeToDoArray.filter(function(categoryPersonal){
 				return(categoryPersonal.categories === "Personal")
 				})
-		
-		clearTable();
 
-		printTable(personalUserArray);
-		return personalUserArray;
+		if(personalUserArray.length == 0)
+		{
+			document.getElementById("todo_table").style.display = "none";
+			document.getElementById("noDataFound").style.display = "inline-block";
+		}
+		else
+		{
+			document.getElementById("noDataFound").style.display = "none";
+			document.getElementById("todo_table").style.display = "inline-table";
+			clearTable();
+
+			printTable(personalUserArray);
+			return personalUserArray;
+		}
 	}
 	else if(filterValueCategories == "Office")
 	{
 		let officeUserArray = codeToDoArray.filter(function(categoryOffice){
 				return(categoryOffice.categories === "Office")
 				})
+
+		if(officeUserArray.length == 0)
+		{
+			document.getElementById("todo_table").style.display = "none";
+			document.getElementById("noDataFound").style.display = "inline-block";
+		}
+		else
+		{
+			document.getElementById("noDataFound").style.display = "none";
+			document.getElementById("todo_table").style.display = "inline-table";
+			clearTable();
 		
-		clearTable();
-		
-		printTable(officeUserArray);
-		return officeUserArray;
+			printTable(officeUserArray);
+			return officeUserArray;
+		}
 	}
 	else
 	{
-		clearTable();
+		if(codeToDoArray.length == 0)
+		{
+			document.getElementById("todo_table").style.display = "none";
+			document.getElementById("noDataFound").style.display = "inline-block";
+		}
+		else
+		{
+			document.getElementById("noDataFound").style.display = "none";
+			document.getElementById("todo_table").style.display = "inline-table";
+			clearTable();
 
-		printTable(codeToDoArray);
-		return codeToDoArray;
+			printTable(codeToDoArray);
+			return codeToDoArray;
+		}
 	}
 }
 
@@ -403,36 +443,68 @@ function filterToDoByStatus()
 			return(doneStatus.status === "done")
 			})
 
-		clearTable();	
-		printTable(statusDoneArray);
-		return statusDoneArray;
+		if(statusDoneArray.length == 0)
+		{
+			document.getElementById("todo_table").style.display = "none";
+			document.getElementById("noDataFound").style.display = "inline-block";
+		}
+		else
+		{
+			document.getElementById("noDataFound").style.display = "none";
+			document.getElementById("todo_table").style.display = "inline-table";
+			clearTable();
+
+			printTable(statusDoneArray);
+			return statusDoneArray;
+		}
 	}
 	else if(filterValueStatus == "pending")
 	{
 		let pendingDoneArray = codeToDoArray.filter(function(pendingStatus){
 			return(pendingStatus.status === "pending")
 			})
-
-		clearTable();
-		printTable(pendingDoneArray);
-		return pendingDoneArray;
+		if(pendingDoneArray.length == 0)
+		{
+			document.getElementById("todo_table").style.display = "none";
+			document.getElementById("noDataFound").style.display = "inline-block";
+		}
+		else
+		{
+			document.getElementById("noDataFound").style.display = "none";
+			document.getElementById("todo_table").style.display = "inline-table";
+			clearTable();
+	
+			printTable(pendingDoneArray);
+			return pendingDoneArray;
+		}
 	}
 	else
 	{
-		clearTable();
-		printTable(codeToDoArray);
-		return codeToDoArray;
+		if(codeToDoArray.length == 0)
+		{
+			document.getElementById("todo_table").style.display = "none";
+			document.getElementById("noDataFound").style.display = "inline-block";
+		}
+		else
+		{
+			document.getElementById("noDataFound").style.display = "none";
+			document.getElementById("todo_table").style.display = "inline-table";
+			clearTable();
+	
+			printTable(codeToDoArray);
+			return codeToDoArray;
+		}
 	}
 }
 
 function filterToDoByDate()
 {
-	if(document.getElementById("filter_sDate") == "")
+	if(document.getElementById("filterStartDate") == "")
 	{
 		alert("Please select the start date");
 		return;
 	}
-	else if(document.getElementById("filter_dDate") == "")
+	else if(document.getElementById("filterDueDate") == "")
 	{
 		alert("Please select the end date");
 		return;
@@ -443,8 +515,8 @@ function filterToDoByDate()
 		let userId = sessionStorage.getItem("loggedInUser");		//fetching which user is logged in (its index in users array)
 		let codeToDoArray = codeArray[userId].toDoUser;	//fetching todo array of that user
 
-		let sDate = document.getElementById("filter_sDate").value;
-		let dDate = document.getElementById("filter_dDate").value;
+		let sDate = document.getElementById("filterStartDate").value;
+		let dDate = document.getElementById("filterDueDate").value;
 
 		let newStartDate = new Date(sDate);
 		let newDueDate = new Date(dDate);
